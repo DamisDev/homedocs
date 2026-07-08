@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Manrope',system-ui,sans-serif;background:#F7F3EE;color:#2B2622;-webkit-font-smoothing:antialiased}
+  a{color:#C4622D;text-decoration:none}
+  a:hover{color:#A94F20}
+  .ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;word-wrap:normal;direction:ltr;font-feature-settings:'liga';-webkit-font-smoothing:antialiased;user-select:none}
+</style>
+</helmet>
+
+<div style="display:flex;min-height:100vh">
+
+  <!-- SIDEBAR -->
+  <aside style="width:264px;flex:none;background:#FFFFFF;border-right:1px solid #ECE4DA;display:flex;flex-direction:column;padding:22px 16px;position:sticky;top:0;height:100vh">
+    <div style="display:flex;align-items:center;gap:11px;padding:4px 8px 22px">
+      <div style="width:38px;height:38px;flex:none;border-radius:11px;background:#C4622D;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(196,98,45,.28)"><span class="ms" style="font-size:22px;color:#fff">home_storage</span></div>
+      <div><div style="font-size:16px;font-weight:800;letter-spacing:-.3px">HomeDocs</div><div style="font-size:11px;color:#A79C90;font-weight:600;letter-spacing:.2px">Documenti di casa</div></div>
+    </div>
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:.9px;color:#B5AA9E;padding:0 10px 8px">MENU</div>
+    <nav style="display:flex;flex-direction:column;gap:3px">
+      <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-size:14px;font-weight:600;color:#5C544B"><span class="ms" style="font-size:21px">grid_view</span><span style="flex:1">Dashboard</span></a>
+      <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-size:14px;font-weight:600;color:#5C544B"><span class="ms" style="font-size:21px">lock</span><span style="flex:1">Spazio privato</span></a>
+      <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-size:14px;font-weight:700;color:#C4622D;background:#FBEDE4"><span class="ms" style="font-size:21px">groups</span><span style="flex:1">Bacheca familiare</span><span style="font-size:11px;font-weight:700;min-width:19px;height:19px;padding:0 5px;border-radius:9px;background:#C4622D;color:#fff;display:inline-flex;align-items:center;justify-content:center">3</span></a>
+      <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-size:14px;font-weight:600;color:#5C544B"><span class="ms" style="font-size:21px">directions_car</span><span style="flex:1">Documenti auto</span></a>
+    </nav>
+    <div style="margin-top:auto;padding-top:18px;border-top:1px solid #F0E9E1">
+      <div style="display:flex;align-items:center;gap:11px;padding:8px 8px;border-radius:12px">
+        <div style="width:38px;height:38px;flex:none;border-radius:50%;background:#EADFD3;color:#8A6A4D;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center">MR</div>
+        <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">Marco Rossi</div><div style="font-size:11.5px;color:#A79C90;font-weight:600">Amministratore</div></div>
+        <span class="ms" style="font-size:20px;color:#B5AA9E">settings</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <header style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:24px 32px;border-bottom:1px solid #ECE4DA;background:rgba(247,243,238,.85);position:sticky;top:0;z-index:5">
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <h1 style="margin:0;font-size:23px;font-weight:800;letter-spacing:-.5px">Bacheca familiare</h1>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#8A6A4D;background:#F2E7DA;border:1px solid #E7D8C6;padding:5px 11px;border-radius:20px"><span class="ms" style="font-size:16px">groups</span>4 membri</span>
+        </div>
+        <p style="margin:5px 0 0;font-size:13.5px;color:#A79C90;font-weight:500">Documenti e avvisi condivisi con la Famiglia Rossi</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #ECE4DA;border-radius:11px;padding:0 12px;height:42px;width:230px"><span class="ms" style="font-size:20px;color:#B5AA9E">search</span><input placeholder="Cerca documenti…" style="border:0;outline:0;background:transparent;font-family:inherit;font-size:13.5px;color:#2B2622;width:100%"></div>
+        <button style="width:42px;height:42px;flex:none;border:1px solid #ECE4DA;background:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative"><span class="ms" style="font-size:21px;color:#6E655B">notifications</span><span style="position:absolute;top:6px;right:6px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:#C0392B;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff">3</span></button>
+        <button style="display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 17px;border:0;background:#C4622D;color:#fff;font-family:inherit;font-size:13.5px;font-weight:700;border-radius:11px;cursor:pointer;box-shadow:0 4px 12px rgba(196,98,45,.28)"><span class="ms" style="font-size:20px">add</span>Nuovo documento</button>
+      </div>
+    </header>
+
+    <main style="padding:28px 32px 44px;display:flex;flex-direction:column;gap:24px">
+      <section style="background:#fff;border:1px solid #ECE4DA;border-radius:18px;padding:20px 22px;box-shadow:0 1px 3px rgba(43,38,34,.05)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <span class="ms" style="font-size:21px;color:#C4622D">diversity_3</span>
+          <h2 style="margin:0;font-size:16px;font-weight:800;letter-spacing:-.3px;flex:1">Membri della famiglia</h2>
+          <button style="display:inline-flex;align-items:center;gap:6px;border:1px solid #ECE4DA;background:#fff;color:#6E655B;font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:10px;cursor:pointer"><span class="ms" style="font-size:17px">person_add</span>Invita</button>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <sc-for list="{{ members }}" as="m" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:11px;background:#FAF6F1;border:1px solid #F0E9E1;border-radius:13px;padding:10px 15px 10px 11px;min-width:180px">
+              <div style="width:40px;height:40px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;background:{{ m.bg }}">{{ m.initials }}</div>
+              <div><div style="font-size:13.5px;font-weight:700">{{ m.name }}</div><div style="font-size:11.5px;color:#A79C90;font-weight:600">{{ m.role }}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;align-items:start">
+        <section style="background:#fff;border:1px solid #ECE4DA;border-radius:18px;box-shadow:0 1px 3px rgba(43,38,34,.05);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:11px;padding:19px 22px 15px">
+            <span class="ms" style="font-size:22px;color:#C4622D">campaign</span>
+            <h2 style="margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.3px;flex:1">Avvisi recenti</h2>
+            <span style="font-size:11px;font-weight:700;background:#FBEDE4;color:#C4622D;padding:3px 9px;border-radius:20px">3 nuovi</span>
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ avvisi }}" as="a" hint-placeholder-count="3">
+              <div style="display:flex;gap:13px;padding:15px 22px;border-top:1px solid #F3ECE4">
+                <div style="width:36px;height:36px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;background:{{ a.bg }}">{{ a.initials }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:13.5px;line-height:1.45"><strong style="font-weight:700">{{ a.who }}</strong> {{ a.action }} <strong style="font-weight:700;color:#C4622D">{{ a.doc }}</strong></div>
+                  <sc-if value="{{ a.note }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:12.5px;color:#6E655B;font-weight:500;background:#FAF6F1;border-radius:9px;padding:7px 11px;margin-top:7px">{{ a.note }}</div>
+                  </sc-if>
+                  <div style="font-size:11.5px;color:#B5AA9E;font-weight:600;margin-top:6px">{{ a.time }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="background:#fff;border:1px solid #ECE4DA;border-radius:18px;box-shadow:0 1px 3px rgba(43,38,34,.05);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:11px;padding:19px 22px 15px">
+            <span class="ms" style="font-size:22px;color:#C4622D">folder_shared</span>
+            <h2 style="margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.3px;flex:1">Documenti condivisi</h2>
+            <span style="font-size:12px;color:#A79C90;font-weight:600">31 file</span>
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ condivisi }}" as="c" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:14px;padding:14px 22px;border-top:1px solid #F3ECE4;cursor:pointer">
+                <div style="width:40px;height:40px;flex:none;border-radius:11px;display:flex;align-items:center;justify-content:center;background:{{ c.bg }}"><span class="ms" style="font-size:21px;color:{{ c.fg }}">{{ c.icon }}</span></div>
+                <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</div><div style="font-size:12px;color:#A79C90;font-weight:600;margin-top:2px">{{ c.cat }} · caricato da {{ c.by }}</div></div>
+                <span class="ms" style="font-size:20px;color:#C7BDB2">chevron_right</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const cat = {
+      casa: { icon: 'home',  bg: '#E7F3EA', fg: '#3B7A4E', cat: 'Casa' },
+      auto: { icon: 'directions_car', bg: '#E6EEF7', fg: '#2F6DB0', cat: 'Auto' },
+      doc:  { icon: 'badge', bg: '#F1ECE6', fg: '#8A7F73', cat: 'Documenti' },
+    };
+    const cd = (title, k, by) => ({ title, ...cat[k], by });
+    return {
+      members: [
+        { initials: 'MR', name: 'Marco Rossi', role: 'Amministratore', bg: '#C4622D' },
+        { initials: 'LR', name: 'Laura Rossi', role: 'Genitore',       bg: '#3B7A4E' },
+        { initials: 'SR', name: 'Sofia Rossi', role: 'Figlia',         bg: '#2F6DB0' },
+        { initials: 'LU', name: 'Luca Rossi',  role: 'Figlio',         bg: '#6A4FB0' },
+      ],
+      avvisi: [
+        { initials: 'LR', bg: '#3B7A4E', who: 'Laura', action: 'ha condiviso', doc: 'Contratto luce e gas', note: 'Rinnovo confermato fino al 2027, tariffa bloccata.', time: 'ieri alle 18:40' },
+        { initials: 'SR', bg: '#2F6DB0', who: 'Sofia', action: 'ha caricato', doc: 'Certificato scolastico', note: '', time: '2 giorni fa' },
+        { initials: 'MR', bg: '#C4622D', who: 'Marco', action: 'ha fissato in bacheca', doc: 'Verbale assemblea condominio', note: 'Da leggere prima della prossima riunione.', time: '3 giorni fa' },
+      ],
+      condivisi: [
+        cd('Contratto luce e gas',         'casa', 'Laura'),
+        cd('Verbale assemblea condominio', 'casa', 'Marco'),
+        cd('Polizza RC Auto — Golf',       'auto', 'Marco'),
+        cd('Certificato scolastico Sofia', 'doc',  'Sofia'),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

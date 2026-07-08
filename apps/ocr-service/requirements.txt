@@ -1,0 +1,8 @@
+# PLACEHOLDER — Claude Code completerà questo file in Fase 2
+# con le dipendenze reali del servizio OCR/AI.
+
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+anthropic

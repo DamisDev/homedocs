@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Manrope',system-ui,sans-serif;background:#F7F3EE;color:#2B2622;-webkit-font-smoothing:antialiased}
+  a{color:#C4622D;text-decoration:none}
+  a:hover{color:#A94F20}
+  .ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;word-wrap:normal;direction:ltr;font-feature-settings:'liga';-webkit-font-smoothing:antialiased;user-select:none}
+</style>
+</helmet>
+
+<div style="display:flex;min-height:100vh">
+
+  <!-- SIDEBAR -->
+  <aside style="width:264px;flex:none;background:#FFFFFF;border-right:1px solid #ECE4DA;display:flex;flex-direction:column;padding:22px 16px;position:sticky;top:0;height:100vh">
+    <div style="display:flex;align-items:center;gap:11px;padding:4px 8px 22px">
+      <div style="width:38px;height:38px;flex:none;border-radius:11px;background:#C4622D;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(196,98,45,.28)"><span class="ms" style="font-size:22px;color:#fff">home_storage</span></div>
+      <div><div style="font-size:16px;font-weight:800;letter-spacing:-.3px">HomeDocs</div><div style="font-size:11px;color:#A79C90;font-weight:600;letter-spacing:.2px">Documenti di casa</div></div>
+    </div>
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:.9px;color:#B5AA9E;padding:0 10px 8px">MENU</div>
+    <nav style="display:flex;flex-direction:column;gap:3px">
+      <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-size:14px;font-weight:700;color:#C4622D;background:#FBEDE4"><span class="ms" style="font-size:21px">grid_view</span><span style="flex:1">Dashboard</span></a>
+      <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-size:14px;font-weight:600;color:#5C544B"><span class="ms" style="font-size:21px">lock</span><span style="flex:1">Spazio privato</span></a>
+      <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-size:14px;font-weight:600;color:#5C544B"><span class="ms" style="font-size:21px">groups</span><span style="flex:1">Bacheca familiare</span><span style="font-size:11px;font-weight:700;min-width:19px;height:19px;padding:0 5px;border-radius:9px;background:#C4622D;color:#fff;display:inline-flex;align-items:center;justify-content:center">3</span></a>
+      <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-size:14px;font-weight:600;color:#5C544B"><span class="ms" style="font-size:21px">directions_car</span><span style="flex:1">Documenti auto</span></a>
+    </nav>
+    <div style="margin-top:auto;padding-top:18px;border-top:1px solid #F0E9E1">
+      <div style="display:flex;align-items:center;gap:11px;padding:8px 8px;border-radius:12px">
+        <div style="width:38px;height:38px;flex:none;border-radius:50%;background:#EADFD3;color:#8A6A4D;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center">MR</div>
+        <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">Marco Rossi</div><div style="font-size:11.5px;color:#A79C90;font-weight:600">Amministratore</div></div>
+        <span class="ms" style="font-size:20px;color:#B5AA9E">settings</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <header style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:24px 32px;border-bottom:1px solid #ECE4DA;background:rgba(247,243,238,.85);position:sticky;top:0;z-index:5">
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <h1 style="margin:0;font-size:23px;font-weight:800;letter-spacing:-.5px">Ciao, Marco</h1>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#8A6A4D;background:#F2E7DA;border:1px solid #E7D8C6;padding:5px 11px;border-radius:20px"><span class="ms" style="font-size:16px">groups</span>Famiglia Rossi</span>
+        </div>
+        <p style="margin:5px 0 0;font-size:13.5px;color:#A79C90;font-weight:500">Mercoledì 8 luglio 2026 · hai 5 scadenze nei prossimi 30 giorni</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #ECE4DA;border-radius:11px;padding:0 12px;height:42px;width:230px"><span class="ms" style="font-size:20px;color:#B5AA9E">search</span><input placeholder="Cerca documenti…" style="border:0;outline:0;background:transparent;font-family:inherit;font-size:13.5px;color:#2B2622;width:100%"></div>
+        <button style="width:42px;height:42px;flex:none;border:1px solid #ECE4DA;background:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative"><span class="ms" style="font-size:21px;color:#6E655B">notifications</span><span style="position:absolute;top:6px;right:6px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:#C0392B;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff">3</span></button>
+        <button style="display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 17px;border:0;background:#C4622D;color:#fff;font-family:inherit;font-size:13.5px;font-weight:700;border-radius:11px;cursor:pointer;box-shadow:0 4px 12px rgba(196,98,45,.28)"><span class="ms" style="font-size:20px">add</span>Nuovo documento</button>
+      </div>
+    </header>
+
+    <main style="padding:28px 32px 44px;display:flex;flex-direction:column;gap:26px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+          <div style="background:#fff;border:1px solid #ECE4DA;border-radius:16px;padding:17px 19px;display:flex;align-items:center;gap:15px;box-shadow:0 1px 2px rgba(43,38,34,.04)">
+            <div style="width:44px;height:44px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ s.bg }}"><span class="ms" style="font-size:23px;color:{{ s.fg }}">{{ s.icon }}</span></div>
+            <div><div style="font-size:25px;font-weight:800;letter-spacing:-.5px;line-height:1">{{ s.value }}</div><div style="font-size:12.5px;color:#A79C90;font-weight:600;margin-top:3px">{{ s.label }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;align-items:start">
+        <section style="background:#fff;border:1px solid #ECE4DA;border-radius:18px;box-shadow:0 1px 3px rgba(43,38,34,.05);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:11px;padding:19px 22px 15px">
+            <span class="ms" style="font-size:22px;color:#C4622D">event_upcoming</span>
+            <h2 style="margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.3px;flex:1">Scadenze imminenti</h2>
+            <span style="font-size:12px;color:#A79C90;font-weight:600">prossimi 30 giorni</span>
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ scadenze }}" as="d" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:14px;padding:14px 22px;border-top:1px solid #F3ECE4;cursor:pointer">
+                <div style="width:40px;height:40px;flex:none;border-radius:11px;display:flex;align-items:center;justify-content:center;background:{{ d.bg }}"><span class="ms" style="font-size:21px;color:{{ d.fg }}">{{ d.icon }}</span></div>
+                <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.title }}</div><div style="font-size:12px;color:#A79C90;font-weight:600;margin-top:2px">{{ d.cat }} · scade il {{ d.date }}</div></div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:none">
+                  <span style="font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:8px;background:{{ d.badgeBg }};color:{{ d.badgeFg }};white-space:nowrap">{{ d.badge }}</span>
+                  <span style="font-size:11.5px;color:#B5AA9E;font-weight:600">{{ d.rel }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <a href="#" style="display:block;text-align:center;padding:14px;font-size:13px;font-weight:700;border-top:1px solid #F3ECE4">Vedi tutte le scadenze</a>
+        </section>
+
+        <section style="background:#fff;border:1px solid #ECE4DA;border-radius:18px;box-shadow:0 1px 3px rgba(43,38,34,.05);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:11px;padding:19px 22px 15px">
+            <span class="ms" style="font-size:22px;color:#C4622D">history</span>
+            <h2 style="margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.3px;flex:1">Documenti recenti</h2>
+            <span style="font-size:12px;color:#A79C90;font-weight:600">ultimi caricati</span>
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ recenti }}" as="r" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:14px;padding:14px 22px;border-top:1px solid #F3ECE4;cursor:pointer">
+                <div style="width:40px;height:40px;flex:none;border-radius:11px;display:flex;align-items:center;justify-content:center;background:{{ r.bg }}"><span class="ms" style="font-size:21px;color:{{ r.fg }}">{{ r.icon }}</span></div>
+                <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</div><div style="font-size:12px;color:#A79C90;font-weight:600;margin-top:2px">{{ r.cat }} · {{ r.date }}</div></div>
+                <span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:20px;background:{{ r.tagBg }};color:{{ r.tagFg }};flex:none"><span class="ms" style="font-size:15px">{{ r.tagIcon }}</span>{{ r.tag }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <a href="#" style="display:block;text-align:center;padding:14px;font-size:13px;font-weight:700;border-top:1px solid #F3ECE4">Apri archivio documenti</a>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const cat = {
+      medico: { icon: 'medical_services', bg: '#FCE9E9', fg: '#C0392B', cat: 'Medico' },
+      casa:   { icon: 'home',             bg: '#E7F3EA', fg: '#3B7A4E', cat: 'Casa' },
+      auto:   { icon: 'directions_car',   bg: '#E6EEF7', fg: '#2F6DB0', cat: 'Auto' },
+    };
+    const level = {
+      urgente:     { badge: 'Urgente',     badgeBg: '#FBE2DE', badgeFg: '#C0392B' },
+      arrivo:      { badge: 'In arrivo',   badgeBg: '#FBF0DA', badgeFg: '#B07714' },
+      pianificato: { badge: 'Pianificato', badgeBg: '#EAF1EA', badgeFg: '#4E7A57' },
+    };
+    const share = {
+      privato:   { tag: 'Privato',   tagIcon: 'lock',  tagBg: '#F1ECE6', tagFg: '#8A7F73' },
+      condiviso: { tag: 'Condiviso', tagIcon: 'group', tagBg: '#E7F3EA', tagFg: '#3B7A4E' },
+    };
+    const sc = (title, k, date, rel, lv) => ({ title, ...cat[k], date, rel, ...level[lv] });
+    const rc = (title, k, date, sh) => ({ title, ...cat[k], date, ...share[sh] });
+    return {
+      stats: [
+        { icon: 'event',  value: '5',  label: 'Scadenze · 30 giorni',  bg: '#FBE2DE', fg: '#C0392B' },
+        { icon: 'folder', value: '48', label: 'Documenti totali',      bg: '#F2E7DA', fg: '#B07714' },
+        { icon: 'group',  value: '31', label: 'Condivisi in famiglia', bg: '#E7F3EA', fg: '#3B7A4E' },
+      ],
+      scadenze: [
+        sc('Revisione auto — Fiat Panda', 'auto',   '12 lug 2026', 'tra 4 giorni',  'urgente'),
+        sc('Visita cardiologica — Marco', 'medico', '18 lug 2026', 'tra 10 giorni', 'arrivo'),
+        sc('Assicurazione casa',          'casa',   '25 lug 2026', 'tra 17 giorni', 'arrivo'),
+        sc('Bollo auto — VW Golf',        'auto',   '3 ago 2026',  'tra 26 giorni', 'pianificato'),
+        sc('Vaccino richiamo — Sofia',    'medico', '5 ago 2026',  'tra 28 giorni', 'pianificato'),
+      ],
+      recenti: [
+        rc('Referto analisi del sangue', 'medico', 'oggi, 09:14', 'privato'),
+        rc('Contratto luce e gas',       'casa',   'ieri, 18:40', 'condiviso'),
+        rc('Polizza RC Auto — Golf',     'auto',   '2 lug 2026',  'condiviso'),
+        rc('Ricetta medica — Sofia',     'medico', '1 lug 2026',  'privato'),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

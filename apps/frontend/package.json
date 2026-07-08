@@ -1,0 +1,9 @@
+{
+  "name": "homedocs-frontend",
+  "version": "0.0.1",
+  "private": true,
+  "description": "PLACEHOLDER — Claude Code sostituirà questo file con un vero progetto Vue 3 + Vite in Fase 0 (es. tramite `npm create vite@latest . -- --template vue-ts`).",
+  "scripts": {
+    "dev": "echo 'Placeholder: sostituire con progetto Vite reale in Fase 0'"
+  }
+}

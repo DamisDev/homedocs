@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Manrope',system-ui,sans-serif;background:#EFE9E1;color:#2B2622;-webkit-font-smoothing:antialiased}
+  .ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';-webkit-font-smoothing:antialiased;user-select:none}
+  .scr::-webkit-scrollbar{display:none}
+  .scr{scrollbar-width:none}
+</style>
+</helmet>
+
+<div style="padding:52px 56px 64px">
+  <div style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:40px;height:40px;border-radius:12px;background:#C4622D;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(196,98,45,.28)"><span class="ms" style="font-size:23px;color:#fff">home_storage</span></div>
+      <div>
+        <div style="font-size:20px;font-weight:800;letter-spacing:-.4px">HomeDocs — versione mobile</div>
+        <div style="font-size:13px;color:#8A7F73;font-weight:600">Stessa esperienza su smartphone: barra di navigazione in basso, contenuti a colonna singola</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:44px;flex-wrap:wrap;align-items:flex-start">
+
+    <!-- ============ SCREEN A · DASHBOARD ============ -->
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:12px;font-weight:700;color:#8A7F73;letter-spacing:.3px;padding-left:6px">Dashboard</div>
+      <div style="width:390px;flex:none;background:#fff;border:1px solid #E4DBCF;border-radius:46px;padding:13px;box-shadow:0 34px 70px rgba(43,38,34,.16)">
+        <div style="border-radius:34px;overflow:hidden;background:#F7F3EE;height:800px;display:flex;flex-direction:column;position:relative">
+          <div style="position:absolute;top:13px;left:50%;transform:translateX(-50%);width:104px;height:29px;background:#1A1512;border-radius:16px;z-index:3"></div>
+          <div style="height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex:none">
+            <span style="font-size:14px;font-weight:800">9:41</span>
+            <span style="display:flex;gap:6px;color:#2B2622"><span class="ms" style="font-size:17px">signal_cellular_alt</span><span class="ms" style="font-size:17px">wifi</span><span class="ms" style="font-size:18px">battery_full</span></span>
+          </div>
+
+          <div class="scr" style="flex:1;overflow:auto;display:flex;flex-direction:column;gap:18px;padding:8px 18px 22px">
+            <div style="display:flex;align-items:flex-start;gap:12px">
+              <div style="flex:1">
+                <div style="font-size:23px;font-weight:800;letter-spacing:-.5px">Ciao, Marco</div>
+                <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#8A6A4D;background:#F2E7DA;border:1px solid #E7D8C6;padding:4px 10px;border-radius:20px;margin-top:6px"><span class="ms" style="font-size:15px">groups</span>Famiglia Rossi</span>
+              </div>
+              <button style="width:42px;height:42px;flex:none;border:1px solid #ECE4DA;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative"><span class="ms" style="font-size:21px;color:#6E655B">notifications</span><span style="position:absolute;top:7px;right:7px;width:9px;height:9px;border-radius:50%;background:#C0392B;border:2px solid #fff"></span></button>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #ECE4DA;border-radius:13px;padding:0 13px;height:46px"><span class="ms" style="font-size:20px;color:#B5AA9E">search</span><span style="font-size:14px;color:#B5AA9E;font-weight:500">Cerca documenti…</span></div>
+
+            <div style="display:flex;gap:11px">
+              <div style="flex:1;background:#fff;border:1px solid #ECE4DA;border-radius:15px;padding:14px 13px">
+                <div style="width:36px;height:36px;border-radius:10px;background:#FBE2DE;display:flex;align-items:center;justify-content:center;margin-bottom:9px"><span class="ms" style="font-size:20px;color:#C0392B">event</span></div>
+                <div style="font-size:22px;font-weight:800;line-height:1">5</div>
+                <div style="font-size:11px;color:#A79C90;font-weight:600;margin-top:2px">Scadenze 30gg</div>
+              </div>
+              <div style="flex:1;background:#fff;border:1px solid #ECE4DA;border-radius:15px;padding:14px 13px">
+                <div style="width:36px;height:36px;border-radius:10px;background:#E7F3EA;display:flex;align-items:center;justify-content:center;margin-bottom:9px"><span class="ms" style="font-size:20px;color:#3B7A4E">group</span></div>
+                <div style="font-size:22px;font-weight:800;line-height:1">31</div>
+                <div style="font-size:11px;color:#A79C90;font-weight:600;margin-top:2px">Condivisi</div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;padding:0 2px"><span class="ms" style="font-size:20px;color:#C4622D">event_upcoming</span><span style="font-size:16px;font-weight:800;flex:1">Scadenze imminenti</span></div>
+              <div style="background:#fff;border:1px solid #ECE4DA;border-radius:16px;overflow:hidden">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 15px">
+                  <div style="width:38px;height:38px;flex:none;border-radius:11px;background:#E6EEF7;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:20px;color:#2F6DB0">directions_car</span></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">Revisione — Fiat Panda</div><div style="font-size:11.5px;color:#A79C90;font-weight:600;margin-top:1px">Auto · 12 lug</div></div>
+                  <span style="font-size:11px;font-weight:700;padding:4px 8px;border-radius:7px;background:#FBE2DE;color:#C0392B">Urgente</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 15px;border-top:1px solid #F3ECE4">
+                  <div style="width:38px;height:38px;flex:none;border-radius:11px;background:#FCE9E9;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:20px;color:#C0392B">medical_services</span></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">Visita cardiologica</div><div style="font-size:11.5px;color:#A79C90;font-weight:600;margin-top:1px">Medico · 18 lug</div></div>
+                  <span style="font-size:11px;font-weight:700;padding:4px 8px;border-radius:7px;background:#FBF0DA;color:#B07714">In arrivo</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 15px;border-top:1px solid #F3ECE4">
+                  <div style="width:38px;height:38px;flex:none;border-radius:11px;background:#E7F3EA;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:20px;color:#3B7A4E">home</span></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">Assicurazione casa</div><div style="font-size:11.5px;color:#A79C90;font-weight:600;margin-top:1px">Casa · 25 lug</div></div>
+                  <span style="font-size:11px;font-weight:700;padding:4px 8px;border-radius:7px;background:#FBF0DA;color:#B07714">In arrivo</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;padding:0 2px"><span class="ms" style="font-size:20px;color:#C4622D">history</span><span style="font-size:16px;font-weight:800;flex:1">Documenti recenti</span></div>
+              <div style="background:#fff;border:1px solid #ECE4DA;border-radius:16px;overflow:hidden">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 15px">
+                  <div style="width:38px;height:38px;flex:none;border-radius:11px;background:#FCE9E9;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:20px;color:#C0392B">medical_services</span></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">Referto analisi</div><div style="font-size:11.5px;color:#A79C90;font-weight:600;margin-top:1px">Medico · oggi</div></div>
+                  <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#8A7F73"><span class="ms" style="font-size:14px">lock</span></span>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 15px;border-top:1px solid #F3ECE4">
+                  <div style="width:38px;height:38px;flex:none;border-radius:11px;background:#E7F3EA;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:20px;color:#3B7A4E">home</span></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">Contratto luce e gas</div><div style="font-size:11.5px;color:#A79C90;font-weight:600;margin-top:1px">Casa · ieri</div></div>
+                  <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#3B7A4E"><span class="ms" style="font-size:14px">group</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex:none;display:flex;background:#fff;border-top:1px solid #ECE4DA;padding:9px 8px 22px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#C4622D"><span class="ms" style="font-size:24px">grid_view</span><span style="font-size:10.5px;font-weight:700">Home</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B5AA9E"><span class="ms" style="font-size:24px">lock</span><span style="font-size:10.5px;font-weight:600">Privato</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B5AA9E;position:relative"><span class="ms" style="font-size:24px">groups</span><span style="font-size:10.5px;font-weight:600">Bacheca</span><span style="position:absolute;top:-2px;right:22px;min-width:15px;height:15px;padding:0 4px;border-radius:8px;background:#C4622D;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center">3</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B5AA9E"><span class="ms" style="font-size:24px">directions_car</span><span style="font-size:10.5px;font-weight:600">Auto</span></div>
+          </div>
+
+          <div style="position:absolute;bottom:88px;right:18px;width:54px;height:54px;border-radius:17px;background:#C4622D;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(196,98,45,.4)"><span class="ms" style="font-size:28px;color:#fff">add</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SCREEN B · DOCUMENTI AUTO ============ -->
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:12px;font-weight:700;color:#8A7F73;letter-spacing:.3px;padding-left:6px">Documenti auto</div>
+      <div style="width:390px;flex:none;background:#fff;border:1px solid #E4DBCF;border-radius:46px;padding:13px;box-shadow:0 34px 70px rgba(43,38,34,.16)">
+        <div style="border-radius:34px;overflow:hidden;background:#F7F3EE;height:800px;display:flex;flex-direction:column;position:relative">
+          <div style="position:absolute;top:13px;left:50%;transform:translateX(-50%);width:104px;height:29px;background:#1A1512;border-radius:16px;z-index:3"></div>
+          <div style="height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex:none">
+            <span style="font-size:14px;font-weight:800">9:41</span>
+            <span style="display:flex;gap:6px;color:#2B2622"><span class="ms" style="font-size:17px">signal_cellular_alt</span><span class="ms" style="font-size:17px">wifi</span><span class="ms" style="font-size:18px">battery_full</span></span>
+          </div>
+
+          <div class="scr" style="flex:1;overflow:auto;display:flex;flex-direction:column;gap:16px;padding:8px 18px 22px">
+            <div>
+              <div style="font-size:23px;font-weight:800;letter-spacing:-.5px">Documenti auto</div>
+              <div style="font-size:13px;color:#A79C90;font-weight:600;margin-top:3px">2 veicoli · 8 documenti</div>
+            </div>
+
+            <div style="background:#fff;border:1px solid #ECE4DA;border-radius:18px;overflow:hidden">
+              <div style="display:flex;align-items:center;gap:12px;padding:16px;background:#FAF6F1;border-bottom:1px solid #F0E9E1">
+                <div style="width:44px;height:44px;flex:none;border-radius:12px;background:#E6EEF7;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:24px;color:#2F6DB0">directions_car</span></div>
+                <div style="flex:1"><div style="font-size:15.5px;font-weight:800">Fiat Panda</div><div style="font-size:11.5px;color:#A79C90;font-weight:600">Immatricolata 2019</div></div>
+                <span style="font-size:12px;font-weight:800;letter-spacing:.8px;background:#fff;border:1px solid #DCE4EE;color:#2F6DB0;padding:5px 9px;border-radius:7px">GA 123 BC</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:#FBE2DE;border-bottom:1px solid #F0E9E1"><span class="ms" style="font-size:17px;color:#C0392B">schedule</span><span style="font-size:12px;font-weight:700;color:#C0392B">Revisione, 12 lug</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:13px 16px"><span class="ms" style="font-size:21px;color:#8A7F73;width:24px;text-align:center">build</span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Revisione</div><div style="font-size:11.5px;color:#A79C90;font-weight:600">Scade il 12 lug 2026</div></div><span style="font-size:11px;font-weight:700;padding:4px 8px;border-radius:7px;background:#FBE2DE;color:#C0392B">Urgente</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid #F3ECE4"><span class="ms" style="font-size:21px;color:#8A7F73;width:24px;text-align:center">verified_user</span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Assicurazione RC</div><div style="font-size:11.5px;color:#A79C90;font-weight:600">Valida fino al 14 nov 2026</div></div><span style="font-size:11px;font-weight:700;padding:4px 8px;border-radius:7px;background:#EAF1EA;color:#4E7A57">Valido</span></div>
+            </div>
+
+            <div style="background:#fff;border:1px solid #ECE4DA;border-radius:18px;overflow:hidden">
+              <div style="display:flex;align-items:center;gap:12px;padding:16px;background:#FAF6F1;border-bottom:1px solid #F0E9E1">
+                <div style="width:44px;height:44px;flex:none;border-radius:12px;background:#E6EEF7;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:24px;color:#2F6DB0">directions_car</span></div>
+                <div style="flex:1"><div style="font-size:15.5px;font-weight:800">VW Golf</div><div style="font-size:11.5px;color:#A79C90;font-weight:600">Immatricolata 2022</div></div>
+                <span style="font-size:12px;font-weight:800;letter-spacing:.8px;background:#fff;border:1px solid #DCE4EE;color:#2F6DB0;padding:5px 9px;border-radius:7px">EK 456 ZP</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:#FBF0DA;border-bottom:1px solid #F0E9E1"><span class="ms" style="font-size:17px;color:#B07714">schedule</span><span style="font-size:12px;font-weight:700;color:#B07714">Bollo, 3 ago</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:13px 16px"><span class="ms" style="font-size:21px;color:#8A7F73;width:24px;text-align:center">receipt_long</span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Bollo auto</div><div style="font-size:11.5px;color:#A79C90;font-weight:600">Scade il 3 ago 2026</div></div><span style="font-size:11px;font-weight:700;padding:4px 8px;border-radius:7px;background:#FBF0DA;color:#B07714">In scadenza</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid #F3ECE4"><span class="ms" style="font-size:21px;color:#8A7F73;width:24px;text-align:center">build</span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Revisione</div><div style="font-size:11.5px;color:#A79C90;font-weight:600">Valida fino al 2028</div></div><span style="font-size:11px;font-weight:700;padding:4px 8px;border-radius:7px;background:#EAF1EA;color:#4E7A57">Valido</span></div>
+            </div>
+          </div>
+
+          <div style="flex:none;display:flex;background:#fff;border-top:1px solid #ECE4DA;padding:9px 8px 22px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B5AA9E"><span class="ms" style="font-size:24px">grid_view</span><span style="font-size:10.5px;font-weight:600">Home</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B5AA9E"><span class="ms" style="font-size:24px">lock</span><span style="font-size:10.5px;font-weight:600">Privato</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B5AA9E;position:relative"><span class="ms" style="font-size:24px">groups</span><span style="font-size:10.5px;font-weight:600">Bacheca</span><span style="position:absolute;top:-2px;right:22px;min-width:15px;height:15px;padding:0 4px;border-radius:8px;background:#C4622D;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center">3</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#C4622D"><span class="ms" style="font-size:24px">directions_car</span><span style="font-size:10.5px;font-weight:700">Auto</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SCREEN C · BACHECA FAMILIARE ============ -->
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:12px;font-weight:700;color:#8A7F73;letter-spacing:.3px;padding-left:6px">Bacheca familiare</div>
+      <div style="width:390px;flex:none;background:#fff;border:1px solid #E4DBCF;border-radius:46px;padding:13px;box-shadow:0 34px 70px rgba(43,38,34,.16)">
+        <div style="border-radius:34px;overflow:hidden;background:#F7F3EE;height:800px;display:flex;flex-direction:column;position:relative">
+          <div style="position:absolute;top:13px;left:50%;transform:translateX(-50%);width:104px;height:29px;background:#1A1512;border-radius:16px;z-index:3"></div>
+          <div style="height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex:none">
+            <span style="font-size:14px;font-weight:800">9:41</span>
+            <span style="display:flex;gap:6px;color:#2B2622"><span class="ms" style="font-size:17px">signal_cellular_alt</span><span class="ms" style="font-size:17px">wifi</span><span class="ms" style="font-size:18px">battery_full</span></span>
+          </div>
+
+          <div class="scr" style="flex:1;overflow:auto;display:flex;flex-direction:column;gap:18px;padding:8px 18px 22px">
+            <div>
+              <div style="font-size:23px;font-weight:800;letter-spacing:-.5px">Bacheca familiare</div>
+              <div style="font-size:13px;color:#A79C90;font-weight:600;margin-top:3px">Famiglia Rossi · 4 membri</div>
+            </div>
+
+            <div style="display:flex;gap:14px;overflow:auto" class="scr">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:62px"><div style="width:52px;height:52px;border-radius:50%;background:#C4622D;color:#fff;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center">MR</div><span style="font-size:11px;font-weight:700">Marco</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:62px"><div style="width:52px;height:52px;border-radius:50%;background:#3B7A4E;color:#fff;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center">LR</div><span style="font-size:11px;font-weight:700">Laura</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:62px"><div style="width:52px;height:52px;border-radius:50%;background:#2F6DB0;color:#fff;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center">SR</div><span style="font-size:11px;font-weight:700">Sofia</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:62px"><div style="width:52px;height:52px;border-radius:50%;background:#6A4FB0;color:#fff;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center">LU</div><span style="font-size:11px;font-weight:700">Luca</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;width:62px"><div style="width:52px;height:52px;border-radius:50%;background:#fff;border:1.5px dashed #D8CCBD;color:#B5AA9E;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:24px">person_add</span></div><span style="font-size:11px;font-weight:600;color:#A79C90">Invita</span></div>
+            </div>
+
+            <div>
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;padding:0 2px"><span class="ms" style="font-size:20px;color:#C4622D">campaign</span><span style="font-size:16px;font-weight:800;flex:1">Avvisi recenti</span><span style="font-size:10.5px;font-weight:700;background:#FBEDE4;color:#C4622D;padding:3px 8px;border-radius:20px">3 nuovi</span></div>
+              <div style="background:#fff;border:1px solid #ECE4DA;border-radius:16px;overflow:hidden">
+                <div style="display:flex;gap:11px;padding:14px 15px">
+                  <div style="width:34px;height:34px;flex:none;border-radius:50%;background:#3B7A4E;color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center">LR</div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13px;line-height:1.4"><strong>Laura</strong> ha condiviso <strong style="color:#C4622D">Contratto luce e gas</strong></div><div style="font-size:12px;color:#6E655B;background:#FAF6F1;border-radius:8px;padding:6px 10px;margin-top:6px">Rinnovo confermato fino al 2027.</div><div style="font-size:11px;color:#B5AA9E;font-weight:600;margin-top:5px">ieri alle 18:40</div></div>
+                </div>
+                <div style="display:flex;gap:11px;padding:14px 15px;border-top:1px solid #F3ECE4">
+                  <div style="width:34px;height:34px;flex:none;border-radius:50%;background:#2F6DB0;color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center">SR</div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13px;line-height:1.4"><strong>Sofia</strong> ha caricato <strong style="color:#C4622D">Certificato scolastico</strong></div><div style="font-size:11px;color:#B5AA9E;font-weight:600;margin-top:5px">2 giorni fa</div></div>
+                </div>
+                <div style="display:flex;gap:11px;padding:14px 15px;border-top:1px solid #F3ECE4">
+                  <div style="width:34px;height:34px;flex:none;border-radius:50%;background:#C4622D;color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center">MR</div>
+                  <div style="flex:1;min-width:0"><div style="font-size:13px;line-height:1.4"><strong>Marco</strong> ha fissato <strong style="color:#C4622D">Verbale assemblea</strong></div><div style="font-size:11px;color:#B5AA9E;font-weight:600;margin-top:5px">3 giorni fa</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex:none;display:flex;background:#fff;border-top:1px solid #ECE4DA;padding:9px 8px 22px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B5AA9E"><span class="ms" style="font-size:24px">grid_view</span><span style="font-size:10.5px;font-weight:600">Home</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B5AA9E"><span class="ms" style="font-size:24px">lock</span><span style="font-size:10.5px;font-weight:600">Privato</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#C4622D;position:relative"><span class="ms" style="font-size:24px">groups</span><span style="font-size:10.5px;font-weight:700">Bacheca</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B5AA9E"><span class="ms" style="font-size:24px">directions_car</span><span style="font-size:10.5px;font-weight:600">Auto</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

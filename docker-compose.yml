@@ -1,0 +1,99 @@
+version: "3.9"
+
+services:
+
+  # ─────────────────────────────
+  # Frontend — Vue.js 3 + Vite
+  # ─────────────────────────────
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile.dev
+    container_name: homedocs-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./apps/frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - backend
+
+  # ─────────────────────────────
+  # Backend core — NestJS
+  # ─────────────────────────────
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile.dev
+    container_name: homedocs-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/homedocs
+      - JWT_SECRET=change-me-in-production
+      - JWT_REFRESH_SECRET=change-me-too
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=homedocs
+      - MINIO_SECRET_KEY=homedocs123
+      - MINIO_BUCKET=homedocs-documents
+      - OCR_SERVICE_URL=http://ocr-service:8000
+    depends_on:
+      - mongo
+      - minio
+      - ocr-service
+
+  # ─────────────────────────────
+  # Servizio OCR/AI — Python + FastAPI
+  # ─────────────────────────────
+  ocr-service:
+    build:
+      context: ./apps/ocr-service
+      dockerfile: Dockerfile.dev
+    container_name: homedocs-ocr-service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/ocr-service:/app
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    env_file:
+      - .env
+
+  # ─────────────────────────────
+  # Database — MongoDB
+  # ─────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: homedocs-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  # ─────────────────────────────
+  # Storage file — MinIO (S3-compatible)
+  # ─────────────────────────────
+  minio:
+    image: minio/minio:latest
+    container_name: homedocs-minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"   # API S3
+      - "9001:9001"   # Console web
+    environment:
+      - MINIO_ROOT_USER=homedocs
+      - MINIO_ROOT_PASSWORD=homedocs123
+    volumes:
+      - minio-data:/data
+
+volumes:
+  mongo-data:
+  minio-data:

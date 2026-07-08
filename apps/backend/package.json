@@ -1,0 +1,9 @@
+{
+  "name": "homedocs-backend",
+  "version": "0.0.1",
+  "private": true,
+  "description": "PLACEHOLDER — Claude Code sostituirà questo file con un vero progetto NestJS in Fase 0 (es. tramite `nest new . --skip-git`).",
+  "scripts": {
+    "start:dev": "echo 'Placeholder: sostituire con progetto NestJS reale in Fase 0'"
+  }
+}

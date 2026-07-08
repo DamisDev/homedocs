@@ -1,0 +1,29 @@
+# Dipendenze
+node_modules/
+__pycache__/
+*.pyc
+
+# Ambiente
+.env
+.env.local
+
+# Build
+dist/
+build/
+.vite/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Log
+*.log
+npm-debug.log*
+
+# Docker volumes locali (se montati come cartelle)
+mongo-data/
+minio-data/

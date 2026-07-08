@@ -1,0 +1,17 @@
+# Dockerfile.dev — Frontend (Vue.js 3 + Vite)
+# NOTA: questo è uno scaffolding minimo. Claude Code completerà il progetto
+# reale (package.json, struttura src/, componenti) nella Fase 0/1.
+
+FROM node:22-alpine
+
+WORKDIR /app
+
+# Se package.json non esiste ancora, Claude Code lo creerà con `npm create vite@latest`
+COPY package*.json ./
+RUN if [ -f package.json ]; then npm install; fi
+
+COPY . .
+
+EXPOSE 5173
+
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
