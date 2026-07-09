@@ -50,6 +50,9 @@ services:
       - MINIO_SECRET_KEY=homedocs123
       - MINIO_BUCKET=homedocs-documents
       - OCR_SERVICE_URL=http://ocr-service:8000
+      - SMTP_HOST=mailpit
+      - SMTP_PORT=1025
+      - MAIL_FROM=HomeDocs <noreply@homedocs.local>
     depends_on:
       - mongo
       - minio
@@ -71,6 +74,16 @@ services:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
     env_file:
       - .env
+
+  # ─────────────────────────────
+  # Mail — Mailpit (SMTP di sviluppo con UI su :8025)
+  # ─────────────────────────────
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: homedocs-mailpit
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # UI web + API
 
   # ─────────────────────────────
   # Database — MongoDB

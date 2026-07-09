@@ -15,6 +15,7 @@ import type {
 } from '@homedocs/shared-types';
 import { CategoriesService } from '../categories/categories.service';
 import { OcrService } from '../ocr/ocr.service';
+import { RemindersService } from '../reminders/reminders.service';
 import { StorageService } from '../storage/storage.service';
 import type { AuthenticatedUser } from '../auth/jwt-auth.guard';
 import { HomeDoc, HomeDocDocument } from './document.schema';
@@ -33,6 +34,7 @@ export class DocumentsService {
     private readonly storageService: StorageService,
     private readonly categoriesService: CategoriesService,
     private readonly ocrService: OcrService,
+    private readonly remindersService: RemindersService,
   ) {}
 
   /**
@@ -117,6 +119,8 @@ export class DocumentsService {
       // visibilita e statoOcr: default dello schema ("privato", "pending")
     });
 
+    await this.remindersService.syncForDocument(doc._id, doc.dataScadenza);
+
     // OCR in background: la risposta all'upload non aspetta l'estrazione
     void this.runOcr(doc._id, dto.categoria, file);
 
@@ -156,6 +160,10 @@ export class DocumentsService {
       if (!doc) return; // eliminato durante l'estrazione
       if (!doc.dataScadenza && result.dataScadenza) {
         update.dataScadenza = new Date(result.dataScadenza);
+        await this.remindersService.syncForDocument(
+          docId,
+          update.dataScadenza as Date,
+        );
       }
       await this.docModel.updateOne({ _id: docId }, update).exec();
     } catch (err) {
@@ -251,6 +259,7 @@ export class DocumentsService {
     }
 
     await doc.save();
+    await this.remindersService.syncForDocument(doc._id, doc.dataScadenza);
     return this.toDto(doc);
   }
 
@@ -269,6 +278,7 @@ export class DocumentsService {
   async remove(user: AuthenticatedUser, id: string): Promise<void> {
     const doc = await this.findOwnedOrThrow(user, id);
     await this.storageService.delete(doc.fileKey);
+    await this.remindersService.removeForDocument(doc._id);
     await doc.deleteOne();
   }
 
