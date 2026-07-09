@@ -7,8 +7,8 @@ Contesto specifico per il frontend di homedocs. Leggi anche il `CLAUDE.md` root 
 - Vue.js 3 (Composition API, `<script setup>`)
 - TypeScript
 - Vite
-- Component library: da confermare tra **PrimeVue**, **Vuetify** o **shadcn-vue** (vedi sezione 3ter di `HomeDocs-Project-Spec.md`)
-- Tailwind CSS per variabili di palette/spacing custom
+- UI: **Tailwind CSS 4 + componenti custom** (deciso in Fase 1: i mockup hanno uno stile completamente custom, una component library avrebbe richiesto troppi override). I design token vivono in `src/style.css` (`@theme`).
+- Router: vue-router; stato: Pinia (`src/stores/`); API: fetch wrapper in `src/api/client.ts` con refresh token automatico
 
 ## Riferimenti visivi
 

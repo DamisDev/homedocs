@@ -50,4 +50,4 @@ Ogni documento nasce `privato` (visibile solo a chi lo carica). Diventa `condivi
 
 ## Fase attuale
 
-Fase 0 — Setup iniziale del monorepo, Docker Compose, scaffolding dei tre servizi.
+Fase 1 (MVP) completata nel core: auth JWT, CRUD documenti con filtro privacy centralizzato in `DocumentsService`, storage MinIO, categorie seed, schermate Vue (dashboard, spazio privato, bacheca, upload, dettaglio). Prossimo: Fase 2 — servizio OCR/AI con Claude API.

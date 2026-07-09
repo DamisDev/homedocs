@@ -8,6 +8,9 @@ services:
       context: ./apps/frontend
       dockerfile: Dockerfile.dev
     container_name: homedocs-frontend
+    # npm install all'avvio: allinea node_modules del container quando
+    # cambiano le dipendenze senza dover ricostruire l'immagine
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
     ports:
       - "5173:5173"
     volumes:
@@ -27,6 +30,7 @@ services:
       context: ./apps/backend
       dockerfile: Dockerfile.dev
     container_name: homedocs-backend
+    command: sh -c "npm install && npm run start:dev"
     ports:
       - "3000:3000"
     volumes:
@@ -40,6 +44,7 @@ services:
       - JWT_SECRET=change-me-in-production
       - JWT_REFRESH_SECRET=change-me-too
       - MINIO_ENDPOINT=minio
+      - MINIO_PUBLIC_ENDPOINT=localhost
       - MINIO_PORT=9000
       - MINIO_ACCESS_KEY=homedocs
       - MINIO_SECRET_KEY=homedocs123
