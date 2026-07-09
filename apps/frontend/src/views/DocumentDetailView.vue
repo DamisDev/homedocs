@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import type { DocumentDto } from '@homedocs/shared-types'
 import { ApiError } from '../api/client'
@@ -25,6 +25,23 @@ const busy = ref(false)
 /** Il toggle di visibilità esiste solo per il proprietario (regola 3bis). */
 const isOwner = computed(() => doc.value?.uploadedBy === auth.user?.id)
 
+let pollTimer: ReturnType<typeof setInterval> | undefined
+
+/** Finché l'OCR è in corso, aggiorna il documento ogni 3 secondi. */
+function pollWhilePending() {
+  clearInterval(pollTimer)
+  if (doc.value?.statoOcr !== 'pending') return
+  pollTimer = setInterval(async () => {
+    try {
+      const d = await documentsApi.get(route.params.id as string)
+      doc.value = d
+      if (d.statoOcr !== 'pending') clearInterval(pollTimer)
+    } catch {
+      clearInterval(pollTimer)
+    }
+  }, 3000)
+}
+
 onMounted(async () => {
   try {
     const [d] = await Promise.all([
@@ -32,10 +49,13 @@ onMounted(async () => {
       loadCategories(),
     ])
     doc.value = d
+    pollWhilePending()
   } catch (e) {
     error.value = e instanceof ApiError && e.status === 404 ? 'Documento non trovato' : 'Errore di caricamento'
   }
 })
+
+onUnmounted(() => clearInterval(pollTimer))
 
 async function toggleVisibility() {
   if (!doc.value || busy.value) return
@@ -63,7 +83,7 @@ async function onDelete() {
 }
 
 const ocrLabels: Record<string, { label: string; cls: string }> = {
-  pending: { label: 'OCR in attesa', cls: 'bg-surface-alt text-ink-soft' },
+  pending: { label: 'Estrazione dati in corso…', cls: 'bg-surface-alt text-ink-soft animate-pulse' },
   completato: { label: 'Dati estratti', cls: 'bg-[#E7F3EA] text-success' },
   errore: { label: 'OCR fallito', cls: 'bg-[#FCE9E9] text-danger' },
 }

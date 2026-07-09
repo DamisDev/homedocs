@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ForbiddenException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -13,6 +14,7 @@ import type {
   Visibilita,
 } from '@homedocs/shared-types';
 import { CategoriesService } from '../categories/categories.service';
+import { OcrService } from '../ocr/ocr.service';
 import { StorageService } from '../storage/storage.service';
 import type { AuthenticatedUser } from '../auth/jwt-auth.guard';
 import { HomeDoc, HomeDocDocument } from './document.schema';
@@ -24,10 +26,13 @@ const DEFAULT_PAGE_SIZE = 20;
 
 @Injectable()
 export class DocumentsService {
+  private readonly logger = new Logger(DocumentsService.name);
+
   constructor(
     @InjectModel(HomeDoc.name) private readonly docModel: Model<HomeDoc>,
     private readonly storageService: StorageService,
     private readonly categoriesService: CategoriesService,
+    private readonly ocrService: OcrService,
   ) {}
 
   /**
@@ -112,7 +117,56 @@ export class DocumentsService {
       // visibilita e statoOcr: default dello schema ("privato", "pending")
     });
 
+    // OCR in background: la risposta all'upload non aspetta l'estrazione
+    void this.runOcr(doc._id, dto.categoria, file);
+
     return this.toDto(doc);
+  }
+
+  /**
+   * Estrazione asincrona: aggiorna datiEstratti/statoOcr al termine e
+   * completa dataScadenza/dataDocumento solo se l'utente non li ha forniti.
+   * Ogni errore finisce in statoOcr="errore" senza toccare il documento.
+   */
+  private async runOcr(
+    docId: Types.ObjectId,
+    categoria: string,
+    file: Express.Multer.File,
+  ): Promise<void> {
+    try {
+      const categorie = await this.categoriesService.findAll();
+      const result = await this.ocrService.extract({
+        buffer: file.buffer,
+        mimeType: file.mimetype,
+        fileName: file.originalname,
+        categoria,
+        categorie: categorie.map((c) => c.nome),
+        templateCampi:
+          categorie.find((c) => c.nome === categoria)?.templateCampi ?? [],
+      });
+
+      const update: Record<string, unknown> = {
+        statoOcr: 'completato',
+        datiEstratti: result.datiEstratti ?? {},
+      };
+      if (result.importo != null) {
+        update['datiEstratti.importo'] = String(result.importo);
+      }
+      const doc = await this.docModel.findById(docId).exec();
+      if (!doc) return; // eliminato durante l'estrazione
+      if (!doc.dataScadenza && result.dataScadenza) {
+        update.dataScadenza = new Date(result.dataScadenza);
+      }
+      await this.docModel.updateOne({ _id: docId }, update).exec();
+    } catch (err) {
+      this.logger.warn(
+        `OCR fallito per documento ${docId.toHexString()}: ${err}`,
+      );
+      await this.docModel
+        .updateOne({ _id: docId }, { statoOcr: 'errore' })
+        .exec()
+        .catch(() => undefined);
+    }
   }
 
   async list(

@@ -50,4 +50,4 @@ Ogni documento nasce `privato` (visibile solo a chi lo carica). Diventa `condivi
 
 ## Fase attuale
 
-Fase 1 (MVP) completata nel core: auth JWT, CRUD documenti con filtro privacy centralizzato in `DocumentsService`, storage MinIO, categorie seed, schermate Vue (dashboard, spazio privato, bacheca, upload, dettaglio). Prossimo: Fase 2 — servizio OCR/AI con Claude API.
+Fasi 1 e 2 completate: auth JWT, CRUD documenti con filtro privacy centralizzato in `DocumentsService`, storage MinIO, schermate Vue, e OCR/AI (upload → estrazione asincrona via `apps/ocr-service` + Claude API → `datiEstratti`/`statoOcr`, polling nel dettaglio). Serve `ANTHROPIC_API_KEY` nel `.env` per l'estrazione reale. Prossimo: Fase 3 — promemoria scadenze via email.
