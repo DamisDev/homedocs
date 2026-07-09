@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "description": "Tipi TypeScript condivisi (DTO) tra frontend e backend di homedocs",
-  "types": "src/index.ts",
+  "types": "src/index.d.ts",
   "scripts": {
     "typecheck": "tsc --noEmit"
   },

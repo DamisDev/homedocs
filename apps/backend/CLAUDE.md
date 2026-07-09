@@ -5,7 +5,7 @@ Contesto specifico per il backend core di homedocs. Leggi anche il `CLAUDE.md` r
 ## Stack
 
 - NestJS (Node/TypeScript)
-- MongoDB (via Mongoose o driver nativo — da decidere in Fase 0)
+- MongoDB via **Mongoose** (`@nestjs/mongoose`, deciso in Fase 0)
 - JWT + refresh token per autenticazione
 - Cron job con `@nestjs/schedule` per i promemoria scadenze
 - Nodemailer per invio email
