@@ -12,6 +12,7 @@ services:
       - "5173:5173"
     volumes:
       - ./apps/frontend:/app
+      - ./packages:/packages:ro
       - /app/node_modules
     environment:
       - VITE_API_URL=http://localhost:3000
@@ -30,6 +31,7 @@ services:
       - "3000:3000"
     volumes:
       - ./apps/backend:/app
+      - ./packages:/packages:ro
       - /app/node_modules
     environment:
       - NODE_ENV=development
