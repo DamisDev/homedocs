@@ -18,6 +18,11 @@ export class UsersService {
     return this.userModel.findById(id).exec();
   }
 
+  /** Membri di un household, ordinati per data di ingresso (createdAt). */
+  findByHousehold(householdId: Types.ObjectId): Promise<UserDocument[]> {
+    return this.userModel.find({ householdId }).sort({ createdAt: 1 }).exec();
+  }
+
   create(data: {
     email: string;
     passwordHash: string;

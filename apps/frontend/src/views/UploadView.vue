@@ -1,24 +1,28 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import type { VehicleDto } from '@homedocs/shared-types'
 import { ApiError } from '../api/client'
 import { documentsApi } from '../api/documents'
+import { vehiclesApi } from '../api/vehicles'
 import PageHeader from '../components/PageHeader.vue'
 import { useCategories } from '../composables/useCategories'
 import { useCategoryStyle } from '../composables/useCategoryStyle'
 
 const router = useRouter()
 const { categories, load: loadCategories } = useCategories()
-const { labelOf } = useCategoryStyle(() => categories.value)
+const { labelOf, tipoOf } = useCategoryStyle(() => categories.value)
 
 const file = ref<File | null>(null)
 const dragging = ref(false)
+const vehicles = ref<VehicleDto[]>([])
 const form = ref({
   categoria: '',
   titolo: '',
   descrizione: '',
   dataDocumento: new Date().toISOString().slice(0, 10),
   dataScadenza: '',
+  vehicleId: '',
 })
 const error = ref('')
 const loading = ref(false)
@@ -29,6 +33,8 @@ const selectedCategory = computed(() =>
 const wantsScadenza = computed(
   () => selectedCategory.value?.templateCampi.includes('dataScadenza') ?? false,
 )
+/** Il selettore veicolo compare solo per le categorie di tipo "auto". */
+const isAuto = computed(() => !!form.value.categoria && tipoOf(form.value.categoria) === 'auto')
 
 function onFileChange(e: Event) {
   const input = e.target as HTMLInputElement
@@ -62,6 +68,7 @@ async function onSubmit() {
       descrizione: form.value.descrizione || undefined,
       dataDocumento: form.value.dataDocumento,
       dataScadenza: form.value.dataScadenza || undefined,
+      vehicleId: isAuto.value ? form.value.vehicleId || undefined : undefined,
     })
     await router.push({ name: 'documento', params: { id: doc.id } })
   } catch (e) {
@@ -71,7 +78,10 @@ async function onSubmit() {
   }
 }
 
-onMounted(loadCategories)
+onMounted(async () => {
+  await loadCategories()
+  vehicles.value = await vehiclesApi.list()
+})
 
 const inputClass =
   'h-[42px] rounded-[11px] border border-line bg-surface px-3.5 text-[13.5px] outline-none focus:border-brand'
@@ -117,6 +127,19 @@ const inputClass =
               {{ labelOf(c.nome) }}
             </option>
           </select>
+        </label>
+
+        <label v-if="isAuto" class="flex flex-col gap-1.5">
+          <span class="text-[12.5px] font-bold text-ink-soft">Veicolo (facoltativo)</span>
+          <select v-model="form.vehicleId" :class="inputClass">
+            <option value="">Nessun veicolo</option>
+            <option v-for="v in vehicles" :key="v.id" :value="v.id">
+              {{ v.marca }} {{ v.modello }} · {{ v.targa }}
+            </option>
+          </select>
+          <span v-if="!vehicles.length" class="text-[11px] font-semibold text-ink-mute">
+            Nessun veicolo: aggiungine uno da "Documenti auto".
+          </span>
         </label>
 
         <label class="flex flex-col gap-1.5">

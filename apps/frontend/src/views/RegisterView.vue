@@ -7,12 +7,14 @@ import { useAuthStore } from '../stores/auth'
 const auth = useAuthStore()
 const router = useRouter()
 
+const mode = ref<'crea' | 'entra'>('crea')
 const form = ref({
   nome: '',
   cognome: '',
   email: '',
   password: '',
   nomeHousehold: '',
+  codiceInvito: '',
 })
 const error = ref('')
 const loading = ref(false)
@@ -21,7 +23,16 @@ async function onSubmit() {
   error.value = ''
   loading.value = true
   try {
-    await auth.register(form.value)
+    // Il backend accetta esattamente uno tra nomeHousehold e codiceInvito.
+    await auth.register({
+      nome: form.value.nome,
+      cognome: form.value.cognome,
+      email: form.value.email,
+      password: form.value.password,
+      ...(mode.value === 'crea'
+        ? { nomeHousehold: form.value.nomeHousehold }
+        : { codiceInvito: form.value.codiceInvito.trim().toUpperCase() }),
+    })
     await router.push({ name: 'dashboard' })
   } catch (e) {
     error.value =
@@ -87,18 +98,52 @@ const inputClass =
           />
           <span class="text-[11px] font-semibold text-ink-mute">Minimo 8 caratteri</span>
         </label>
-        <label class="flex flex-col gap-1.5">
-          <span class="text-[12.5px] font-bold text-ink-soft">Nome della famiglia</span>
-          <input
-            v-model="form.nomeHousehold"
-            required
-            placeholder="es. Famiglia Rossi"
-            :class="inputClass"
-          />
-          <span class="text-[11px] font-semibold text-ink-mute"
-            >Creerai un nuovo nucleo familiare di cui sarai amministratore</span
-          >
-        </label>
+        <div class="flex flex-col gap-2">
+          <div class="grid grid-cols-2 gap-1 rounded-[11px] bg-surface-alt p-1">
+            <button
+              type="button"
+              class="h-[34px] rounded-lg text-[12.5px] font-bold transition-colors"
+              :class="mode === 'crea' ? 'bg-surface text-brand shadow-sm' : 'text-ink-mute'"
+              @click="mode = 'crea'"
+            >
+              Crea una famiglia
+            </button>
+            <button
+              type="button"
+              class="h-[34px] rounded-lg text-[12.5px] font-bold transition-colors"
+              :class="mode === 'entra' ? 'bg-surface text-brand shadow-sm' : 'text-ink-mute'"
+              @click="mode = 'entra'"
+            >
+              Entra con codice
+            </button>
+          </div>
+
+          <label v-if="mode === 'crea'" class="flex flex-col gap-1.5">
+            <span class="text-[12.5px] font-bold text-ink-soft">Nome della famiglia</span>
+            <input
+              v-model="form.nomeHousehold"
+              required
+              placeholder="es. Famiglia Rossi"
+              :class="inputClass"
+            />
+            <span class="text-[11px] font-semibold text-ink-mute"
+              >Creerai un nuovo nucleo familiare di cui sarai amministratore</span
+            >
+          </label>
+
+          <label v-else class="flex flex-col gap-1.5">
+            <span class="text-[12.5px] font-bold text-ink-soft">Codice invito</span>
+            <input
+              v-model="form.codiceInvito"
+              required
+              placeholder="es. GA123BCD"
+              class="h-[42px] rounded-[11px] border border-line bg-surface px-3.5 text-[13.5px] font-bold uppercase tracking-[3px] outline-none focus:border-brand"
+            />
+            <span class="text-[11px] font-semibold text-ink-mute"
+              >Entrerai nella famiglia come membro. Chiedi il codice a chi ti ha invitato.</span
+            >
+          </label>
+        </div>
 
         <p v-if="error" class="m-0 text-[12.5px] font-bold text-danger">{{ error }}</p>
 

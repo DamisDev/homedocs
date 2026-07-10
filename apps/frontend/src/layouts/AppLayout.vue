@@ -15,6 +15,8 @@ const navItems = [
   { name: 'dashboard', label: 'Dashboard', icon: 'grid_view' },
   { name: 'privato', label: 'Spazio privato', icon: 'lock' },
   { name: 'bacheca', label: 'Bacheca familiare', icon: 'groups' },
+  { name: 'auto', label: 'Documenti auto', icon: 'directions_car' },
+  { name: 'famiglia', label: 'La mia famiglia', icon: 'diversity_3' },
 ]
 
 async function onLogout() {

@@ -6,10 +6,15 @@ export interface RegisterRequestDto {
   nome: string;
   cognome: string;
   /**
-   * Nome del nuovo household da creare alla registrazione.
-   * In alternativa si entra in un household esistente tramite invito (post-MVP).
+   * Registrazione con creazione di un nuovo household (utente `admin`).
+   * Fornire esattamente uno tra `nomeHousehold` e `codiceInvito`.
    */
-  nomeHousehold: string;
+  nomeHousehold?: string;
+  /**
+   * Registrazione entrando in un household esistente (utente `membro`),
+   * usando il codice invito condiviso dai membri attuali.
+   */
+  codiceInvito?: string;
 }
 
 export interface LoginRequestDto {

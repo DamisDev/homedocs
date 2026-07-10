@@ -5,6 +5,7 @@ import { CategoriesModule } from '../categories/categories.module';
 import { OcrModule } from '../ocr/ocr.module';
 import { RemindersModule } from '../reminders/reminders.module';
 import { StorageModule } from '../storage/storage.module';
+import { VehiclesModule } from '../vehicles/vehicles.module';
 import { HomeDoc, HomeDocSchema } from './document.schema';
 import { DocumentsController } from './documents.controller';
 import { DocumentsService } from './documents.service';
@@ -17,6 +18,7 @@ import { DocumentsService } from './documents.service';
     StorageModule,
     OcrModule,
     RemindersModule,
+    VehiclesModule,
   ],
   controllers: [DocumentsController],
   providers: [DocumentsService],
