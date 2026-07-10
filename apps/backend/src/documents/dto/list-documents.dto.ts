@@ -3,17 +3,30 @@ import {
   IsDateString,
   IsIn,
   IsInt,
+  IsMongoId,
   IsOptional,
   IsString,
   Max,
   Min,
 } from 'class-validator';
-import type { DocumentListQueryDto, Visibilita } from '@homedocs/shared-types';
+import type {
+  DocumentListQueryDto,
+  TipoCategoria,
+  Visibilita,
+} from '@homedocs/shared-types';
 
 export class ListDocumentsQueryDto implements DocumentListQueryDto {
   @IsOptional()
   @IsString()
   categoria?: string;
+
+  @IsOptional()
+  @IsIn(['medico', 'casa', 'auto', 'altro'])
+  tipo?: TipoCategoria;
+
+  @IsOptional()
+  @IsMongoId()
+  vehicleId?: string;
 
   @IsOptional()
   @IsIn(['privato', 'condiviso'])

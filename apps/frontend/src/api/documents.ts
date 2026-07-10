@@ -14,6 +14,7 @@ export interface UploadDocumentInput {
   descrizione?: string
   dataDocumento: string
   dataScadenza?: string
+  vehicleId?: string
   pagamento?: { importo: number; valuta: string; metodoPagamento: string; dataPagamento: string }
 }
 
@@ -21,6 +22,8 @@ export const documentsApi = {
   list(query: DocumentListQueryDto = {}) {
     return api.get<PaginatedDto<DocumentDto>>('/documents', {
       categoria: query.categoria,
+      tipo: query.tipo,
+      vehicleId: query.vehicleId,
       visibilita: query.visibilita,
       scadenzaEntro: query.scadenzaEntro,
       search: query.search,
@@ -45,6 +48,7 @@ export const documentsApi = {
     if (input.descrizione) fd.set('descrizione', input.descrizione)
     fd.set('dataDocumento', input.dataDocumento)
     if (input.dataScadenza) fd.set('dataScadenza', input.dataScadenza)
+    if (input.vehicleId) fd.set('vehicleId', input.vehicleId)
     // i campi annidati del pagamento viaggiano come JSON? No: multipart piatto.
     // Il pagamento si aggiunge in un secondo momento via PATCH (JSON tipato).
     return api.postForm<DocumentDto>('/documents', fd)

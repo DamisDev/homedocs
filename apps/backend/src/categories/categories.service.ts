@@ -1,7 +1,10 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import type { DocumentCategoryDto } from '@homedocs/shared-types';
+import type {
+  DocumentCategoryDto,
+  TipoCategoria,
+} from '@homedocs/shared-types';
 import {
   DocumentCategory,
   DocumentCategoryDocument,
@@ -85,6 +88,15 @@ export class CategoriesService implements OnModuleInit {
 
   async existsBySlug(nome: string): Promise<boolean> {
     return (await this.categoryModel.exists({ nome }).exec()) !== null;
+  }
+
+  /** Slug delle categorie di un dato macro-tipo (es. tutte le categorie "auto"). */
+  async slugsByTipo(tipo: TipoCategoria): Promise<string[]> {
+    const categories = await this.categoryModel
+      .find({ tipo })
+      .select('nome')
+      .exec();
+    return categories.map((c) => c.nome);
   }
 
   private toDto(cat: DocumentCategoryDocument): DocumentCategoryDto {

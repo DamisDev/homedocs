@@ -4,6 +4,11 @@ import type { UserDto } from './user';
 export interface HouseholdDto {
   id: EntityId;
   nome: string;
+  /**
+   * Codice invito persistente: chi lo conosce può registrarsi entrando in
+   * questo household (vedi `RegisterRequestDto.codiceInvito`).
+   */
+  codiceInvito: string;
   createdAt: IsoDateString;
 }
 

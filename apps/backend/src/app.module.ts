@@ -9,6 +9,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { DocumentsModule } from './documents/documents.module';
 import { HouseholdsModule } from './households/households.module';
 import { UsersModule } from './users/users.module';
+import { VehiclesModule } from './vehicles/vehicles.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     HouseholdsModule,
     CategoriesModule,
+    VehiclesModule,
     DocumentsModule,
   ],
   controllers: [AppController],

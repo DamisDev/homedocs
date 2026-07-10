@@ -1,4 +1,10 @@
-import type { EntityId, IsoDateString, StatoOcr, Visibilita } from './common';
+import type {
+  EntityId,
+  IsoDateString,
+  StatoOcr,
+  TipoCategoria,
+  Visibilita,
+} from './common';
 
 /**
  * Pagamento embedded nel documento (es. visite mediche).
@@ -35,6 +41,8 @@ export interface DocumentDto {
   datiEstratti?: DatiEstratti;
   statoOcr: StatoOcr;
   pagamento?: PagamentoDto;
+  /** Veicolo associato (solo documenti auto); assente/null altrimenti. */
+  vehicleId?: EntityId | null;
   createdAt: IsoDateString;
   updatedAt: IsoDateString;
 }
@@ -73,6 +81,10 @@ export interface ChangeVisibilityDto {
 
 export interface DocumentListQueryDto {
   categoria?: string;
+  /** Filtro per macro-tipo della categoria (es. "auto" per la vista Documenti auto). */
+  tipo?: TipoCategoria;
+  /** Solo i documenti associati a questo veicolo. */
+  vehicleId?: EntityId;
   /** "privato" = solo i miei privati, "condiviso" = bacheca familiare; assente = tutti i visibili. */
   visibilita?: Visibilita;
   scadenzaEntro?: IsoDateString;

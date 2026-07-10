@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   UnauthorizedException,
@@ -8,7 +9,12 @@ import { JwtService } from '@nestjs/jwt';
 import type { JwtSignOptions } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { createHash, timingSafeEqual } from 'node:crypto';
-import type { AuthResponseDto, UserDto } from '@homedocs/shared-types';
+import type { Types } from 'mongoose';
+import type {
+  AuthResponseDto,
+  RuoloUtente,
+  UserDto,
+} from '@homedocs/shared-types';
 import { HouseholdsService } from '../households/households.service';
 import { UsersService } from '../users/users.service';
 import { UserDocument } from '../users/user.schema';
@@ -48,19 +54,46 @@ export class AuthService {
       throw new ConflictException('Email già registrata');
     }
 
-    // MVP: la registrazione crea sempre un nuovo household con l'utente admin.
-    // L'ingresso in un household esistente arriverà con gli inviti (post-MVP).
-    const household = await this.householdsService.create(dto.nomeHousehold);
+    const { householdId, ruolo } = await this.resolveHousehold(dto);
     const user = await this.usersService.create({
       email: dto.email,
       passwordHash: await bcrypt.hash(dto.password, BCRYPT_ROUNDS),
       nome: dto.nome,
       cognome: dto.cognome,
-      householdId: household._id,
-      ruolo: 'admin',
+      householdId,
+      ruolo,
     });
 
     return this.buildAuthResponse(user);
+  }
+
+  /**
+   * Determina l'household del nuovo utente: o ne crea uno nuovo (admin) da
+   * `nomeHousehold`, o entra in uno esistente (membro) da `codiceInvito`.
+   * Va fornito esattamente uno dei due.
+   */
+  private async resolveHousehold(
+    dto: RegisterDto,
+  ): Promise<{ householdId: Types.ObjectId; ruolo: RuoloUtente }> {
+    const nomeHousehold = dto.nomeHousehold?.trim();
+    const codiceInvito = dto.codiceInvito?.trim();
+    if (!!nomeHousehold === !!codiceInvito) {
+      throw new BadRequestException(
+        'Fornire esattamente uno tra "nomeHousehold" e "codiceInvito"',
+      );
+    }
+
+    if (codiceInvito) {
+      const household =
+        await this.householdsService.findByInviteCode(codiceInvito);
+      if (!household) {
+        throw new BadRequestException('Codice invito non valido');
+      }
+      return { householdId: household._id, ruolo: 'membro' };
+    }
+
+    const household = await this.householdsService.create(nomeHousehold!);
+    return { householdId: household._id, ruolo: 'admin' };
   }
 
   async login(dto: LoginDto): Promise<AuthResponseDto> {

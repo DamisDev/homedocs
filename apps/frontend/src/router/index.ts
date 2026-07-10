@@ -32,6 +32,16 @@ const router = createRouter({
           component: () => import('../views/FamilyBoardView.vue'),
         },
         {
+          path: 'auto',
+          name: 'auto',
+          component: () => import('../views/VehiclesView.vue'),
+        },
+        {
+          path: 'famiglia',
+          name: 'famiglia',
+          component: () => import('../views/FamilyView.vue'),
+        },
+        {
           path: 'carica',
           name: 'upload',
           component: () => import('../views/UploadView.vue'),

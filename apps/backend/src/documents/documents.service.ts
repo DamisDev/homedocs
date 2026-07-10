@@ -17,6 +17,7 @@ import { CategoriesService } from '../categories/categories.service';
 import { OcrService } from '../ocr/ocr.service';
 import { RemindersService } from '../reminders/reminders.service';
 import { StorageService } from '../storage/storage.service';
+import { VehiclesService } from '../vehicles/vehicles.service';
 import type { AuthenticatedUser } from '../auth/jwt-auth.guard';
 import { HomeDoc, HomeDocDocument } from './document.schema';
 import { CreateDocumentInputDto } from './dto/create-document.dto';
@@ -35,6 +36,7 @@ export class DocumentsService {
     private readonly categoriesService: CategoriesService,
     private readonly ocrService: OcrService,
     private readonly remindersService: RemindersService,
+    private readonly vehiclesService: VehiclesService,
   ) {}
 
   /**
@@ -95,6 +97,16 @@ export class DocumentsService {
   ): Promise<DocumentDto> {
     if (!(await this.categoriesService.existsBySlug(dto.categoria))) {
       throw new BadRequestException(`Categoria "${dto.categoria}" inesistente`);
+    }
+
+    if (
+      dto.vehicleId &&
+      !(await this.vehiclesService.belongsToHousehold(
+        user.householdId,
+        dto.vehicleId,
+      ))
+    ) {
+      throw new BadRequestException('Veicolo inesistente o non accessibile');
     }
 
     const fileKey = await this.storageService.upload(
@@ -183,7 +195,17 @@ export class DocumentsService {
   ): Promise<PaginatedDto<DocumentDto>> {
     const filter: QueryFilter<HomeDoc> = { ...this.visibilityFilter(user) };
 
-    if (query.categoria) filter.categoria = query.categoria;
+    if (query.categoria) {
+      // categoria puntuale ha priorità sul macro-tipo
+      filter.categoria = query.categoria;
+    } else if (query.tipo) {
+      // filtro per macro-tipo: risolve gli slug delle categorie del tipo
+      // (lista vuota → $in [] → nessun risultato, comportamento voluto)
+      filter.categoria = { $in: await this.categoriesService.slugsByTipo(query.tipo) };
+    }
+    if (query.vehicleId && Types.ObjectId.isValid(query.vehicleId)) {
+      filter.vehicleId = new Types.ObjectId(query.vehicleId);
+    }
     if (query.visibilita === 'privato') {
       // "i miei privati": il filtro di visibilità garantisce già che siano solo i propri
       filter.visibilita = 'privato';
@@ -298,6 +320,7 @@ export class DocumentsService {
       visibilita: doc.visibilita,
       datiEstratti: doc.datiEstratti,
       statoOcr: doc.statoOcr,
+      vehicleId: doc.vehicleId?.toHexString() ?? null,
       pagamento: doc.pagamento
         ? {
             importo: doc.pagamento.importo,
