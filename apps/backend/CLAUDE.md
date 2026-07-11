@@ -12,12 +12,14 @@ Contesto specifico per il backend core di homedocs. Leggi anche il `CLAUDE.md` r
 
 ## Moduli principali (da struttura NestJS)
 
-- `AuthModule` — login, registrazione, JWT, refresh token
-- `HouseholdModule` — gestione nucleo familiare, membri
-- `DocumentsModule` — CRUD documenti, upload, gestione visibilità privato/condiviso
+- `AuthModule` — login, registrazione (nuovo household o join via `codiceInvito`), JWT, refresh token
+- `HouseholdsModule` — household, `codiceInvito` univoco (generato alla creazione, rigenerabile), `GET /households/mine` con membri
+- `DocumentsModule` — CRUD documenti, upload, gestione visibilità privato/condiviso, pagamento embedded, filtro per `tipo`/`vehicleId`
 - `RemindersModule` — cron giornaliero, invio notifiche scadenze
-- `VehiclesModule` — gestione veicoli (opzionale, per raggruppare documenti auto)
-- `OcrIntegrationModule` — comunicazione con il servizio Python (`apps/ocr-service`) per l'estrazione dati
+- `VehiclesModule` — CRUD veicoli scoping per household, referenziati da `documents.vehicleId`
+- `OcrModule` — comunicazione con il servizio Python (`apps/ocr-service`) per l'estrazione dati, fire-and-forget dopo l'upload
+
+Nota: `AuthModule` e `HouseholdsModule` si importano a vicenda (JWT guard da un lato, servizio household in registrazione dall'altro) — il ciclo è risolto con `forwardRef` su entrambi i lati.
 
 ## Regola non negoziabile: privacy dei documenti
 

@@ -43,13 +43,17 @@ Font: **Manrope** (Google Fonts, pesi 400/500/600/700/800), icone **Material Sym
 
 Traduci questi valori in variabili CSS/Tailwind (`tailwind.config` o `:root` custom properties) prima di iniziare qualsiasi componente. La mappatura categoria→colore va centralizzata in un unico util/composable (es. `useCategoryStyle`), mai duplicata hardcoded nei singoli componenti.
 
-## Schermate principali (MVP)
+## Schermate principali
 
 1. **Dashboard** — scadenze imminenti, documenti recenti, navigazione verso le altre sezioni
 2. **Spazio privato** — documenti dell'utente corrente non condivisi
 3. **Bacheca familiare** — documenti condivisi da tutti i membri dell'household
-4. **Upload documento** — form con categoria, upload file, stato OCR, conferma/modifica dati estratti
-5. **Dettaglio documento** — visualizzazione completa, toggle privato/condiviso (solo per il proprietario)
+4. **Upload documento** — form con categoria, upload file, stato OCR, veicolo (categorie auto), pagamento facoltativo (categorie che lo prevedono, es. visite mediche)
+5. **Dettaglio documento** — visualizzazione completa, toggle privato/condiviso (solo per il proprietario), dati estratti OCR, card pagamento con modifica/rimozione (solo proprietario)
+6. **Documenti auto** — una card per veicolo con prossima scadenza e documenti collegati; CRUD veicoli
+7. **La mia famiglia** — elenco membri household e codice invito (copia/rigenera)
+
+La registrazione (`RegisterView`) permette di creare un nuovo household o entrare in uno esistente tramite `codiceInvito`.
 
 ## Regola privacy in UI
 
@@ -57,9 +61,10 @@ Ogni documento privato deve avere un indicatore visivo chiaro (es. icona lucchet
 
 ## Comunicazione con il backend
 
-- Chiamate API verso NestJS (`apps/backend`)
+- Chiamate API verso NestJS (`apps/backend`), un modulo in `src/api/` per dominio (`documents.ts`, `vehicles.ts`, `households.ts`, ...)
 - Tipi condivisi da importare da `packages/shared-types` — non duplicare interfacce/DTO localmente
-- Gestione stato upload/OCR: mostrare stato `pending/completato/errore` in modo chiaro durante il polling o via websocket (da decidere in fase di implementazione)
+- Gestione stato upload/OCR: `DocumentDetailView` fa polling ogni 3s finché `statoOcr === 'pending'`
+- Upload multipart: i campi annidati (es. `pagamento`) vanno in `FormData` con notazione bracket (`pagamento[importo]`, ...), che il backend ricompone via `class-transformer` — un campo innestato assegnato solo nel tipo TS ma mai aggiunto al `FormData` viene scartato silenziosamente
 
 ## Convenzioni
 
