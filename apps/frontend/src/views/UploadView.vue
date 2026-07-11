@@ -24,6 +24,8 @@ const form = ref({
   dataScadenza: '',
   vehicleId: '',
 })
+const registraPagamento = ref(false)
+const pagamento = ref({ importo: '', metodoPagamento: '', dataPagamento: '' })
 const error = ref('')
 const loading = ref(false)
 
@@ -32,6 +34,10 @@ const selectedCategory = computed(() =>
 )
 const wantsScadenza = computed(
   () => selectedCategory.value?.templateCampi.includes('dataScadenza') ?? false,
+)
+/** Il campo pagamento compare solo per le categorie che lo prevedono (es. visite mediche). */
+const wantsPagamento = computed(
+  () => selectedCategory.value?.templateCampi.includes('importo') ?? false,
 )
 /** Il selettore veicolo compare solo per le categorie di tipo "auto". */
 const isAuto = computed(() => !!form.value.categoria && tipoOf(form.value.categoria) === 'auto')
@@ -58,6 +64,10 @@ async function onSubmit() {
     error.value = 'Seleziona un file da caricare'
     return
   }
+  if (wantsPagamento.value && registraPagamento.value && !pagamento.value.metodoPagamento) {
+    error.value = 'Indica il metodo di pagamento'
+    return
+  }
   error.value = ''
   loading.value = true
   try {
@@ -69,6 +79,15 @@ async function onSubmit() {
       dataDocumento: form.value.dataDocumento,
       dataScadenza: form.value.dataScadenza || undefined,
       vehicleId: isAuto.value ? form.value.vehicleId || undefined : undefined,
+      pagamento:
+        wantsPagamento.value && registraPagamento.value
+          ? {
+              importo: Number(pagamento.value.importo),
+              valuta: 'EUR',
+              metodoPagamento: pagamento.value.metodoPagamento,
+              dataPagamento: pagamento.value.dataPagamento || form.value.dataDocumento,
+            }
+          : undefined,
     })
     await router.push({ name: 'documento', params: { id: doc.id } })
   } catch (e) {
@@ -167,6 +186,44 @@ const inputClass =
             >
             <input v-model="form.dataScadenza" type="date" :class="inputClass" />
           </label>
+        </div>
+
+        <div v-if="wantsPagamento" class="flex flex-col gap-3 border-t border-line-soft pt-4">
+          <label class="flex cursor-pointer items-center gap-2.5">
+            <input v-model="registraPagamento" type="checkbox" class="h-4 w-4 accent-brand" />
+            <span class="text-[12.5px] font-bold text-ink-soft">Registra un pagamento</span>
+          </label>
+
+          <div v-if="registraPagamento" class="grid grid-cols-2 gap-3">
+            <label class="flex flex-col gap-1.5">
+              <span class="text-[12.5px] font-bold text-ink-soft">Importo (€)</span>
+              <input
+                v-model="pagamento.importo"
+                type="number"
+                step="0.01"
+                min="0"
+                required
+                placeholder="0.00"
+                :class="inputClass"
+              />
+            </label>
+            <label class="flex flex-col gap-1.5">
+              <span class="text-[12.5px] font-bold text-ink-soft">Metodo</span>
+              <select v-model="pagamento.metodoPagamento" required :class="inputClass">
+                <option value="" disabled>Scegli…</option>
+                <option value="Carta">Carta</option>
+                <option value="Contanti">Contanti</option>
+                <option value="Bonifico">Bonifico</option>
+                <option value="Addebito diretto">Addebito diretto</option>
+              </select>
+            </label>
+            <label class="col-span-2 flex flex-col gap-1.5">
+              <span class="text-[12.5px] font-bold text-ink-soft"
+                >Data pagamento (se diversa dalla data documento)</span
+              >
+              <input v-model="pagamento.dataPagamento" type="date" :class="inputClass" />
+            </label>
+          </div>
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import type {
   DocumentCategoryDto,
   DocumentDto,
   DocumentListQueryDto,
+  PagamentoDto,
   PaginatedDto,
   Visibilita,
 } from '@homedocs/shared-types'
@@ -15,7 +16,7 @@ export interface UploadDocumentInput {
   dataDocumento: string
   dataScadenza?: string
   vehicleId?: string
-  pagamento?: { importo: number; valuta: string; metodoPagamento: string; dataPagamento: string }
+  pagamento?: PagamentoDto
 }
 
 export const documentsApi = {
@@ -49,12 +50,23 @@ export const documentsApi = {
     fd.set('dataDocumento', input.dataDocumento)
     if (input.dataScadenza) fd.set('dataScadenza', input.dataScadenza)
     if (input.vehicleId) fd.set('vehicleId', input.vehicleId)
-    // i campi annidati del pagamento viaggiano come JSON? No: multipart piatto.
-    // Il pagamento si aggiunge in un secondo momento via PATCH (JSON tipato).
+    if (input.pagamento) {
+      // notazione bracket: class-transformer la ricompone in oggetto annidato lato backend
+      fd.set('pagamento[importo]', String(input.pagamento.importo))
+      fd.set('pagamento[valuta]', input.pagamento.valuta)
+      fd.set('pagamento[metodoPagamento]', input.pagamento.metodoPagamento)
+      fd.set('pagamento[dataPagamento]', input.pagamento.dataPagamento)
+    }
     return api.postForm<DocumentDto>('/documents', fd)
   },
 
-  update(id: string, body: Partial<UploadDocumentInput> & { datiEstratti?: Record<string, unknown> }) {
+  update(
+    id: string,
+    body: Partial<Omit<UploadDocumentInput, 'pagamento'>> & {
+      datiEstratti?: Record<string, unknown>
+      pagamento?: PagamentoDto | null
+    },
+  ) {
     return api.patch<DocumentDto>(`/documents/${id}`, body)
   },
 
