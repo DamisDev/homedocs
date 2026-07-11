@@ -7,12 +7,14 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import type { Request } from 'express';
+import type { RuoloUtente } from '@homedocs/shared-types';
 import { JwtPayload } from './jwt-payload';
 
 /** Utente autenticato disponibile su `request.user` dopo il guard. */
 export interface AuthenticatedUser {
   userId: string;
   householdId: string;
+  ruolo: RuoloUtente;
 }
 
 @Injectable()
@@ -44,6 +46,7 @@ export class JwtAuthGuard implements CanActivate {
     (request as Request & { user: AuthenticatedUser }).user = {
       userId: payload.sub,
       householdId: payload.householdId,
+      ruolo: payload.ruolo,
     };
     return true;
   }

@@ -151,6 +151,7 @@ export class AuthService {
     const basePayload = {
       sub: user._id.toHexString(),
       householdId: user.householdId.toHexString(),
+      ruolo: user.ruolo,
     };
 
     const accessToken = await this.jwtService.signAsync(

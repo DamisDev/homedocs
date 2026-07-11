@@ -87,6 +87,7 @@ onMounted(async () => {
         </button>
       </div>
       <button
+        v-if="auth.user?.ruolo === 'admin'"
         class="mt-3 inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-[12.5px] font-bold text-ink-soft hover:text-brand disabled:opacity-60"
         :disabled="regenerating"
         @click="regenerate"
@@ -94,6 +95,9 @@ onMounted(async () => {
         <span class="ms text-[17px]">autorenew</span>
         {{ regenerating ? 'Rigenerazione…' : 'Rigenera codice' }}
       </button>
+      <p v-else class="mt-3 text-[11.5px] font-semibold text-ink-mute">
+        Solo l'amministratore può rigenerare il codice invito.
+      </p>
     </section>
 
     <!-- Membri -->

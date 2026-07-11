@@ -6,6 +6,8 @@ import type {
 import { CurrentUser } from '../auth/current-user.decorator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import type { AuthenticatedUser } from '../auth/jwt-auth.guard';
+import { Roles } from '../auth/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 import { HouseholdsService } from './households.service';
 
 @Controller('households')
@@ -21,8 +23,10 @@ export class HouseholdsController {
     return this.householdsService.findWithMembers(user.householdId);
   }
 
-  /** Rigenera il codice invito del proprio household. */
+  /** Rigenera il codice invito del proprio household — solo l'admin. */
   @Post('regenerate-code')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   regenerateCode(
     @CurrentUser() user: AuthenticatedUser,
   ): Promise<HouseholdDto> {
