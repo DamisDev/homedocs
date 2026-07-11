@@ -50,4 +50,6 @@ Ogni documento nasce `privato` (visibile solo a chi lo carica). Diventa `condivi
 
 ## Fase attuale
 
-Fasi 1 e 2 completate: auth JWT, CRUD documenti con filtro privacy centralizzato in `DocumentsService`, storage MinIO, schermate Vue, e OCR/AI (upload → estrazione asincrona via `apps/ocr-service` + Claude API → `datiEstratti`/`statoOcr`, polling nel dettaglio). Serve `ANTHROPIC_API_KEY` nel `.env` per l'estrazione reale. Fase 3 completata: promemoria scadenze (cron 8:00, soglie 30/15/7 giorni, email via Nodemailer; in dev le email finiscono su Mailpit, UI su http://localhost:8025). Prossimo: Fase 4 — rifinitura (multi-utente avanzato, permessi, UX polish).
+Fasi 1, 2 e 3 completate: auth JWT, CRUD documenti con filtro privacy centralizzato in `DocumentsService`, storage MinIO, schermate Vue, OCR/AI (upload → estrazione asincrona via `apps/ocr-service` + Claude API → `datiEstratti`/`statoOcr`, polling nel dettaglio; serve `ANTHROPIC_API_KEY` nel `.env` per l'estrazione reale), e promemoria scadenze (cron 8:00, soglie 30/15/7 giorni, email via Nodemailer; in dev le email finiscono su Mailpit, UI su http://localhost:8025).
+
+Fase 4 in corso: inviti household via `codiceInvito` (join in un household esistente in alternativa alla creazione), `VehiclesModule` con CRUD veicoli, vista "Documenti auto" e filtro documenti per tipo/veicolo, gestione membri famiglia. Rimane da fare: UI per i pagamenti embedded nei documenti (backend già pronto).
