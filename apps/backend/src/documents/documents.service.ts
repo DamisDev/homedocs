@@ -201,7 +201,9 @@ export class DocumentsService {
     } else if (query.tipo) {
       // filtro per macro-tipo: risolve gli slug delle categorie del tipo
       // (lista vuota → $in [] → nessun risultato, comportamento voluto)
-      filter.categoria = { $in: await this.categoriesService.slugsByTipo(query.tipo) };
+      filter.categoria = {
+        $in: await this.categoriesService.slugsByTipo(query.tipo),
+      };
     }
     if (query.vehicleId && Types.ObjectId.isValid(query.vehicleId)) {
       filter.vehicleId = new Types.ObjectId(query.vehicleId);

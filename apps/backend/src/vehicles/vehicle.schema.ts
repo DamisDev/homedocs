@@ -4,7 +4,10 @@ import { HydratedDocument, Types } from 'mongoose';
 export type VehicleDocument = HydratedDocument<Vehicle>;
 
 /** Veicolo dell'household, per raggruppare i documenti auto (sezione 3 della spec). */
-@Schema({ collection: 'vehicles', timestamps: { createdAt: true, updatedAt: false } })
+@Schema({
+  collection: 'vehicles',
+  timestamps: { createdAt: true, updatedAt: false },
+})
 export class Vehicle {
   @Prop({ type: Types.ObjectId, ref: 'Household', required: true, index: true })
   householdId: Types.ObjectId;
