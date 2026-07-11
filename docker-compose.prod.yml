@@ -1,0 +1,87 @@
+# Stack di produzione: immagini buildate (multi-stage), nessun bind-mount del
+# sorgente, nessun "npm install" all'avvio. Uso: docker compose -f
+# docker-compose.prod.yml up --build
+#
+# File indipendente da docker-compose.yml (dev): volumi con nome diverso per
+# non condividere/sporcare i dati dello stack di sviluppo. `image:` esplicito
+# e distinto da quello dev (altrimenti Compose userebbe lo stesso tag
+# "homedocs-<servizio>" per entrambi i file, e l'ultimo build vince — chi
+# passa da uno stack all'altro deve ricordarsi `--build` anche sul dev).
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+      args:
+        VITE_API_URL: http://localhost:3000
+    image: homedocs-frontend-prod
+    container_name: homedocs-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    image: homedocs-backend-prod
+    container_name: homedocs-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - OCR_SERVICE_URL=http://ocr-service:8000
+    depends_on:
+      - mongo
+      - minio
+      - ocr-service
+
+  ocr-service:
+    build:
+      context: apps/ocr-service
+      dockerfile: Dockerfile
+    image: homedocs-ocr-service-prod
+    container_name: homedocs-ocr-service
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: homedocs-mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  mongo:
+    image: mongo:7
+    container_name: homedocs-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data-prod:/data/db
+
+  minio:
+    image: minio/minio:latest
+    container_name: homedocs-minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    env_file:
+      - .env
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
+      - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
+    volumes:
+      - minio-data-prod:/data
+
+volumes:
+  mongo-data-prod:
+  minio-data-prod:

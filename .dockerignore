@@ -1,0 +1,7 @@
+**/node_modules
+**/dist
+**/.env
+**/.git
+**/*.log
+**/coverage
+apps/ocr-service/__pycache__
