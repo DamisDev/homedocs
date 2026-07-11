@@ -55,9 +55,17 @@ Traduci questi valori in variabili CSS/Tailwind (`tailwind.config` o `:root` cus
 
 La registrazione (`RegisterView`) permette di creare un nuovo household o entrare in uno esistente tramite `codiceInvito`.
 
+## Layout responsive
+
+`AppLayout.vue` replica `docs/design/HomeDocs Mobile.dc.html`: sidebar visibile solo `md:` (`≥768px`), sotto quella soglia sostituita da una bottom nav fissa (stessi `navItems`) + un FAB "nuovo documento". Il FAB è `position:fixed` e resta sopra il contenuto durante lo scroll: va nascosto (`showFab` in `AppLayout.vue`) sulle rotte con proprie azioni fitte vicino al bordo, altrimenti le copre — vale sia per rotte esistenti (`documento`, `upload`) sia per qualunque nuova vista con bottoni in basso a destra.
+
 ## Regola privacy in UI
 
 Ogni documento privato deve avere un indicatore visivo chiaro (es. icona lucchetto + tooltip "Solo tu lo vedi") per evitare condivisioni accidentali. Il toggle privato/condiviso è visibile e modificabile **solo** se l'utente corrente è il proprietario del documento (`uploadedBy`).
+
+## Ruoli in UI
+
+Il `ruolo` (`admin`/`membro`) arriva da `auth.user?.ruolo` (store Pinia). Le azioni riservate all'admin (es. rigenerare il codice invito in `FamilyView.vue`) vanno nascoste in UI per i non-admin **e** protette lato backend con `@Roles('admin')` — il controllo UI da solo non basta, è solo cosmetica.
 
 ## Comunicazione con il backend
 
@@ -70,4 +78,8 @@ Ogni documento privato deve avere un indicatore visivo chiaro (es. icona lucchet
 
 - Componenti in PascalCase, un componente per file
 - Composables in `composables/` per logica riutilizzabile (es. `useAuth`, `useDocuments`)
-- Test: da definire in base al setup scelto in Fase 0 (Vitest consigliato per coerenza con Vite)
+- Test: Vitest + `@vue/test-utils` (`npm test`), file `*.spec.ts` accanto al sorgente testato. In CI gira prima di `npm run build`.
+
+## Build di produzione
+
+`Dockerfile` (multi-stage, non `Dockerfile.dev`): builder Node esegue `vue-tsc -b && vite build` (contesto = repo root, serve per risolvere `@homedocs/shared-types` tramite lo stesso path relativo usato in dev), lo stage runtime è `nginx:alpine` che serve `dist/` con `nginx.conf` (fallback SPA per vue-router in modalità history). `VITE_API_URL` è un build arg: Vite lo inlinea nel bundle in fase di build, non è leggibile a runtime come le altre env. Uso: `docker compose -f docker-compose.prod.yml up --build` dalla root del monorepo.

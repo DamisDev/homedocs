@@ -21,6 +21,17 @@ Contesto specifico per il backend core di homedocs. Leggi anche il `CLAUDE.md` r
 
 Nota: `AuthModule` e `HouseholdsModule` si importano a vicenda (JWT guard da un lato, servizio household in registrazione dall'altro) — il ciclo è risolto con `forwardRef` su entrambi i lati.
 
+## Autorizzazione per ruolo
+
+`ruolo` (`admin`/`membro`) viaggia nel JWT payload ed è disponibile su `AuthenticatedUser.ruolo` dopo `JwtAuthGuard`. Per proteggere un endpoint per ruolo: `@UseGuards(RolesGuard) @Roles('admin')` (`src/auth/roles.guard.ts` + `roles.decorator.ts`) — va applicato **dopo** `JwtAuthGuard` nella catena, perché legge `request.user` già popolato. Senza `@Roles(...)` il guard lascia passare chiunque sia autenticato.
+
+## Sicurezza
+
+- Upload: `fileFilter` su `FileInterceptor` (`documents.controller.ts`) accetta solo PDF/immagini — un content-type diverso viene scartato da multer prima ancora di arrivare al service.
+- Rate limiting: `@nestjs/throttler` globale (100 req/min) via `APP_GUARD`; `/auth/login` e `/auth/register` hanno una soglia più stretta (`@Throttle`, 10/min) contro brute-force.
+- CORS: `CORS_ORIGINS` in `.env`, lista di origin separate da virgola (fallback `FRONTEND_URL` poi `localhost:5173`) — mai wide-open.
+- Secrets (JWT, MinIO) letti da `.env` via `env_file` nel compose, mai in chiaro nel file versionato.
+
 ## Regola non negoziabile: privacy dei documenti
 
 Questa è la regola più importante del backend. Vedi sezione 3bis di `HomeDocs-Project-Spec.md` per il dettaglio completo.
@@ -50,3 +61,8 @@ Fai riferimento alla sezione 3 di `HomeDocs-Project-Spec.md` per lo schema compl
 - Un modulo NestJS per dominio (non un modulo unico "documents-and-everything")
 - DTO con `class-validator` per validazione input
 - Conventional Commits, branch `feature/HD-XXX-slug`
+- Test: Jest (già configurato, `npm test`), `*.spec.ts` accanto al service testato; i mock dei model Mongoose sono oggetti plain con `jest.fn()` sulle query, mai una connessione reale
+
+## Build di produzione
+
+`Dockerfile` (multi-stage, non `Dockerfile.dev`): builder esegue `npm ci` + `nest build` con contesto = repo root (serve a copiare `packages/shared-types` nella stessa posizione relativa attesa dal path mapping di `tsconfig.json` — tipi soltanto, erasi a runtime), lo stage runtime fa `npm ci --omit=dev` e avvia `node dist/main.js` (nessun watcher). Uso: `docker compose -f docker-compose.prod.yml up --build` dalla root del monorepo. Il file `docker-compose.prod.yml` usa `image:` esplicito e distinto da quello dev (suffisso `-prod`) — senza, Compose riuserebbe lo stesso tag tra i due file e l'ultimo build vincerebbe su entrambi gli stack.
