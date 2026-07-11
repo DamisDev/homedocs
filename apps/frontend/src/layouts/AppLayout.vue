@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
 const auth = useAuthStore()
 const router = useRouter()
+const route = useRoute()
+
+/**
+ * Il FAB "nuovo documento" è fixed e resta sopra il contenuto durante lo
+ * scroll: sulle pagine con proprie azioni fitte (dettaglio documento) o con
+ * già una CTA equivalente (upload) va nascosto per non coprire i bottoni.
+ */
+const showFab = computed(() => !['documento', 'upload'].includes(route.name as string))
 
 const initials = computed(() => {
   const u = auth.user
@@ -12,11 +20,11 @@ const initials = computed(() => {
 })
 
 const navItems = [
-  { name: 'dashboard', label: 'Dashboard', icon: 'grid_view' },
-  { name: 'privato', label: 'Spazio privato', icon: 'lock' },
-  { name: 'bacheca', label: 'Bacheca familiare', icon: 'groups' },
-  { name: 'auto', label: 'Documenti auto', icon: 'directions_car' },
-  { name: 'famiglia', label: 'La mia famiglia', icon: 'diversity_3' },
+  { name: 'dashboard', label: 'Dashboard', labelMobile: 'Home', icon: 'grid_view' },
+  { name: 'privato', label: 'Spazio privato', labelMobile: 'Privato', icon: 'lock' },
+  { name: 'bacheca', label: 'Bacheca familiare', labelMobile: 'Bacheca', icon: 'groups' },
+  { name: 'auto', label: 'Documenti auto', labelMobile: 'Auto', icon: 'directions_car' },
+  { name: 'famiglia', label: 'La mia famiglia', labelMobile: 'Famiglia', icon: 'diversity_3' },
 ]
 
 async function onLogout() {
@@ -28,7 +36,7 @@ async function onLogout() {
 <template>
   <div class="flex min-h-screen">
     <aside
-      class="sticky top-0 flex h-screen w-[264px] flex-none flex-col border-r border-line bg-surface px-4 py-[22px]"
+      class="sticky top-0 hidden h-screen w-[264px] flex-none flex-col border-r border-line bg-surface px-4 py-[22px] md:flex"
     >
       <div class="flex items-center gap-[11px] px-2 pb-[22px] pt-1">
         <div
@@ -89,8 +97,31 @@ async function onLogout() {
       </div>
     </aside>
 
-    <div class="flex min-w-0 flex-1 flex-col">
+    <div class="flex min-w-0 flex-1 flex-col pb-[100px] md:pb-0">
       <RouterView />
     </div>
+
+    <!-- Bottom nav mobile: replica il mockup docs/design/HomeDocs Mobile.dc.html -->
+    <nav
+      class="fixed inset-x-0 bottom-0 z-10 flex border-t border-line bg-surface px-2 pb-[22px] pt-[9px] md:hidden"
+    >
+      <RouterLink
+        v-for="item in navItems"
+        :key="item.name"
+        :to="{ name: item.name }"
+        class="flex flex-1 flex-col items-center gap-[3px] text-ink-faint"
+        exact-active-class="!text-brand"
+      >
+        <span class="ms text-[24px]">{{ item.icon }}</span>
+        <span class="text-[10.5px] font-semibold">{{ item.labelMobile }}</span>
+      </RouterLink>
+    </nav>
+    <RouterLink
+      v-if="showFab"
+      :to="{ name: 'upload' }"
+      class="fixed bottom-[88px] right-[18px] z-10 flex h-[54px] w-[54px] items-center justify-center rounded-[17px] bg-brand shadow-[0_8px_20px_rgba(196,98,45,.4)] md:hidden"
+    >
+      <span class="ms text-[28px] text-white">add</span>
+    </RouterLink>
   </div>
 </template>

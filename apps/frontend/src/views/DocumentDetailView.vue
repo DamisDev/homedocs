@@ -143,7 +143,7 @@ const inputClass =
 <template>
   <PageHeader :title="doc?.titolo ?? 'Documento'" :subtitle="doc ? labelOf(doc.categoria) : ''" />
 
-  <main class="px-8 pb-11 pt-7">
+  <main class="px-4 pb-11 pt-7 md:px-8">
     <p v-if="error" class="text-sm font-bold text-danger">{{ error }}</p>
 
     <div v-else-if="doc" class="mx-auto flex max-w-[720px] flex-col gap-5">

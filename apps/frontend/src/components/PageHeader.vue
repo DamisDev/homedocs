@@ -4,7 +4,7 @@ defineProps<{ title: string; subtitle?: string }>()
 
 <template>
   <header
-    class="sticky top-0 z-[5] flex flex-wrap items-center gap-5 border-b border-line bg-page/85 px-8 py-6 backdrop-blur"
+    class="sticky top-0 z-[5] flex flex-wrap items-center gap-5 border-b border-line bg-page/85 px-4 py-6 backdrop-blur md:px-8"
   >
     <div class="min-w-[200px] flex-1">
       <div class="flex items-center gap-2.5">

@@ -62,7 +62,7 @@ onMounted(async () => {
     </template>
   </PageHeader>
 
-  <main class="px-8 pb-11 pt-7">
+  <main class="px-4 pb-11 pt-7 md:px-8">
     <section
       class="overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_3px_rgba(43,38,34,.05)]"
     >

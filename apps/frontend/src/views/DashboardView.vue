@@ -65,7 +65,7 @@ onMounted(async () => {
     </template>
   </PageHeader>
 
-  <main class="flex flex-col gap-[26px] px-8 pb-11 pt-7">
+  <main class="flex flex-col gap-[26px] px-4 pb-11 pt-7 md:px-8">
     <div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-4">
       <div
         v-for="s in stats"
@@ -85,7 +85,7 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(340px,1fr))] items-start gap-6">
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] items-start gap-6">
       <section
         class="overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_3px_rgba(43,38,34,.05)]"
       >

@@ -137,11 +137,11 @@ const inputClass =
     </template>
   </PageHeader>
 
-  <main class="px-8 pb-11 pt-7">
+  <main class="px-4 pb-11 pt-7 md:px-8">
     <div
       v-if="vehicles.length"
       class="grid items-start gap-[22px]"
-      style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr))"
+      style="grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr))"
     >
       <section
         v-for="v in vehicles"

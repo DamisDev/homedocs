@@ -61,7 +61,7 @@ onMounted(async () => {
     </template>
   </PageHeader>
 
-  <main class="mx-auto flex w-full max-w-[720px] flex-col gap-6 px-8 pb-11 pt-7">
+  <main class="mx-auto flex w-full max-w-[720px] flex-col gap-6 px-4 pb-11 pt-7 md:px-8">
     <!-- Codice invito -->
     <section
       class="rounded-[18px] border border-line bg-surface p-6 shadow-[0_1px_3px_rgba(43,38,34,.05)]"

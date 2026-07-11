@@ -109,7 +109,7 @@ const inputClass =
 <template>
   <PageHeader title="Nuovo documento" subtitle="Il documento sarà visibile solo a te finché non decidi di condividerlo" />
 
-  <main class="px-8 pb-11 pt-7">
+  <main class="px-4 pb-11 pt-7 md:px-8">
     <form class="mx-auto flex max-w-[640px] flex-col gap-5" @submit.prevent="onSubmit">
       <!-- Dropzone -->
       <label
