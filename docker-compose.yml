@@ -37,22 +37,16 @@ services:
       - ./apps/backend:/app
       - ./packages:/packages:ro
       - /app/node_modules
+    # Secrets (JWT_SECRET, JWT_REFRESH_SECRET, MINIO_ACCESS_KEY/SECRET_KEY,
+    # MONGODB_URI, MINIO_ENDPOINT/PORT/BUCKET) arrivano da .env: mai in
+    # chiaro qui. In produzione rigenerare i segreti in .env, non nel compose.
+    env_file:
+      - .env
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - MONGODB_URI=mongodb://mongo:27017/homedocs
-      - JWT_SECRET=change-me-in-production
-      - JWT_REFRESH_SECRET=change-me-too
-      - MINIO_ENDPOINT=minio
-      - MINIO_PUBLIC_ENDPOINT=localhost
-      - MINIO_PORT=9000
-      - MINIO_ACCESS_KEY=homedocs
-      - MINIO_SECRET_KEY=homedocs123
-      - MINIO_BUCKET=homedocs-documents
+      # non-secret, specifico dell'hostname interno Docker: resta qui
       - OCR_SERVICE_URL=http://ocr-service:8000
-      - SMTP_HOST=mailpit
-      - SMTP_PORT=1025
-      - MAIL_FROM=HomeDocs <noreply@homedocs.local>
     depends_on:
       - mongo
       - minio
@@ -106,9 +100,13 @@ services:
     ports:
       - "9000:9000"   # API S3
       - "9001:9001"   # Console web
+    # ${VAR}: sostituzione letta dal .env in root da parte del CLI di
+    # Docker Compose stesso (diverso da env_file, che vale per il container).
+    env_file:
+      - .env
     environment:
-      - MINIO_ROOT_USER=homedocs
-      - MINIO_ROOT_PASSWORD=homedocs123
+      - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
+      - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
     volumes:
       - minio-data:/data
 

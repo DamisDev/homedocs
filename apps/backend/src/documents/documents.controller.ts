@@ -27,6 +27,10 @@ import { UpdateDocumentInputDto } from './dto/update-document.dto';
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20 MB
 
+/** Coerente col testo UI ("PDF o immagini"): rifiuta ogni altro content-type dichiarato. */
+const ALLOWED_MIME_TYPES =
+  /^(application\/pdf|image\/(jpeg|png|webp|heic|heif))$/;
+
 @Controller('documents')
 @UseGuards(JwtAuthGuard)
 export class DocumentsController {
@@ -35,7 +39,12 @@ export class DocumentsController {
   /** Upload multipart: campo "file" + campi del CreateDocumentDto. */
   @Post()
   @UseInterceptors(
-    FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }),
+    FileInterceptor('file', {
+      limits: { fileSize: MAX_FILE_SIZE },
+      fileFilter: (_req, file, callback) => {
+        callback(null, ALLOWED_MIME_TYPES.test(file.mimetype));
+      },
+    }),
   )
   create(
     @CurrentUser() user: AuthenticatedUser,
