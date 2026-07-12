@@ -32,9 +32,9 @@ async function onSubmit() {
     <div class="w-full max-w-[400px]">
       <div class="mb-7 flex items-center justify-center gap-3">
         <div
-          class="flex h-[46px] w-[46px] items-center justify-center rounded-[13px] bg-brand shadow-[0_4px_10px_rgba(196,98,45,.28)]"
+          class="h-[46px] w-[46px] overflow-hidden rounded-[13px] shadow-[0_4px_10px_rgba(196,98,45,.28)]"
         >
-          <span class="ms text-[26px] text-white">home_storage</span>
+          <img src="/logo.png" alt="HomeDocs" class="h-full w-full object-cover" />
         </div>
         <div>
           <div class="text-xl font-extrabold tracking-tight">HomeDocs</div>

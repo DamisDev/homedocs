@@ -40,9 +40,9 @@ async function onLogout() {
     >
       <div class="flex items-center gap-[11px] px-2 pb-[22px] pt-1">
         <div
-          class="flex h-[38px] w-[38px] flex-none items-center justify-center rounded-[11px] bg-brand shadow-[0_4px_10px_rgba(196,98,45,.28)]"
+          class="h-[38px] w-[38px] flex-none overflow-hidden rounded-[11px] shadow-[0_4px_10px_rgba(196,98,45,.28)]"
         >
-          <span class="ms text-[22px] text-white">home_storage</span>
+          <img src="/logo.png" alt="HomeDocs" class="h-full w-full object-cover" />
         </div>
         <div>
           <div class="text-base font-extrabold tracking-tight">HomeDocs</div>
