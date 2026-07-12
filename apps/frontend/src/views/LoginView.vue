@@ -34,10 +34,10 @@ async function onSubmit() {
         <div
           class="h-[46px] w-[46px] overflow-hidden rounded-[13px] shadow-[0_4px_10px_rgba(196,98,45,.28)]"
         >
-          <img src="/logo.png" alt="HomeDocs" class="h-full w-full object-cover" />
+          <img src="/logo.png" alt="Homedocs" class="h-full w-full object-cover" />
         </div>
         <div>
-          <div class="text-xl font-extrabold tracking-tight">HomeDocs</div>
+          <div class="text-xl font-extrabold tracking-tight">Homedocs</div>
           <div class="text-xs font-semibold text-ink-mute">Documenti di casa</div>
         </div>
       </div>

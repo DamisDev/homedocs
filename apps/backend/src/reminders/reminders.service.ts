@@ -143,7 +143,7 @@ export class RemindersService {
       recipients.map((u) => u.email),
       `⏰ "${doc.titolo}" scade ${quando}`,
       `<div style="font-family:sans-serif;max-width:560px">
-        <h2 style="color:#C4622D">HomeDocs — promemoria scadenza</h2>
+        <h2 style="color:#C4622D">Homedocs — promemoria scadenza</h2>
         <p>Il documento <strong>${doc.titolo}</strong> (${doc.categoria.replaceAll('_', ' ')})
         scade <strong>${quando}</strong>, il ${dataStr}.</p>
         <p style="color:#6E655B;font-size:13px">Ricevi questa email perché il documento è

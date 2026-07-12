@@ -42,10 +42,10 @@ async function onLogout() {
         <div
           class="h-[38px] w-[38px] flex-none overflow-hidden rounded-[11px] shadow-[0_4px_10px_rgba(196,98,45,.28)]"
         >
-          <img src="/logo.png" alt="HomeDocs" class="h-full w-full object-cover" />
+          <img src="/logo.png" alt="Homedocs" class="h-full w-full object-cover" />
         </div>
         <div>
-          <div class="text-base font-extrabold tracking-tight">HomeDocs</div>
+          <div class="text-base font-extrabold tracking-tight">Homedocs</div>
           <div class="text-[11px] font-semibold text-ink-mute">Documenti di casa</div>
         </div>
       </div>

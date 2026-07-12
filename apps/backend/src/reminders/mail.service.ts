@@ -22,7 +22,7 @@ export class MailService {
     });
     this.from =
       configService.get<string>('MAIL_FROM') ??
-      'HomeDocs <noreply@homedocs.local>';
+      'Homedocs <noreply@homedocs.local>';
   }
 
   async send(to: string[], subject: string, html: string): Promise<void> {

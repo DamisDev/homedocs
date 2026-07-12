@@ -1,4 +1,4 @@
-# HomeDocs — Sistema di Gestione Documenti Domestici
+# Homedocs — Sistema di Gestione Documenti Domestici
 
 > Documento di progetto per bootstrap con Claude Code. Contiene overview, architettura, modello dati, MVP e roadmap.
 
@@ -6,7 +6,7 @@
 
 ## 1. Overview
 
-**HomeDocs** è una web app per centralizzare e organizzare tutti i documenti della vita domestica di un nucleo familiare:
+**Homedocs** è una web app per centralizzare e organizzare tutti i documenti della vita domestica di un nucleo familiare:
 
 - Referti e visite mediche (con pagamenti associati)
 - Documenti della casa (contratti, bollette, garanzie, assicurazioni)
