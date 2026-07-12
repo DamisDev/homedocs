@@ -7,18 +7,38 @@
 # e distinto da quello dev (altrimenti Compose userebbe lo stesso tag
 # "homedocs-<servizio>" per entrambi i file, e l'ultimo build vince — chi
 # passa da uno stack all'altro deve ricordarsi `--build` anche sul dev).
+#
+# Caddy termina TLS (Let's Encrypt automatico) ed è l'unico servizio con
+# porte esposte pubblicamente (80/443). Mongo e MinIO non hanno più porte
+# pubblicate: raggiungibili solo sulla rete Docker interna dai servizi che
+# ne hanno bisogno. `restart: unless-stopped` fa ripartire tutto da solo
+# quando la VM si riavvia (es. dopo lo start automatico mattutino).
 
 services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: homedocs-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data-prod:/data
+      - caddy-config-prod:/config
+    depends_on:
+      - frontend
+      - backend
+
   frontend:
     build:
       context: .
       dockerfile: apps/frontend/Dockerfile
       args:
-        VITE_API_URL: http://localhost:3000
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
     image: homedocs-frontend-prod
     container_name: homedocs-frontend
-    ports:
-      - "5173:80"
+    restart: unless-stopped
     depends_on:
       - backend
 
@@ -28,8 +48,7 @@ services:
       dockerfile: apps/backend/Dockerfile
     image: homedocs-backend-prod
     container_name: homedocs-backend
-    ports:
-      - "3000:3000"
+    restart: unless-stopped
     env_file:
       - .env
     environment:
@@ -47,33 +66,22 @@ services:
       dockerfile: Dockerfile
     image: homedocs-ocr-service-prod
     container_name: homedocs-ocr-service
-    ports:
-      - "8000:8000"
+    restart: unless-stopped
     env_file:
       - .env
-
-  mailpit:
-    image: axllent/mailpit:latest
-    container_name: homedocs-mailpit
-    ports:
-      - "1025:1025"
-      - "8025:8025"
 
   mongo:
     image: mongo:7
     container_name: homedocs-mongo
-    ports:
-      - "27017:27017"
+    restart: unless-stopped
     volumes:
       - mongo-data-prod:/data/db
 
   minio:
     image: minio/minio:latest
     container_name: homedocs-minio
+    restart: unless-stopped
     command: server /data --console-address ":9001"
-    ports:
-      - "9000:9000"
-      - "9001:9001"
     env_file:
       - .env
     environment:
@@ -85,3 +93,5 @@ services:
 volumes:
   mongo-data-prod:
   minio-data-prod:
+  caddy-data-prod:
+  caddy-config-prod:

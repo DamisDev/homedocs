@@ -1,0 +1,15 @@
+# Reverse proxy di produzione con TLS automatico (Let's Encrypt).
+# Sostituisci "tuodominio.it" con il dominio reale in entrambi i blocchi
+# prima del deploy, e crea un record DNS A anche per il sottodominio "api".
+#
+# Le route del backend non hanno un prefisso /api (vedi apps/backend/src/main.ts,
+# nessun setGlobalPrefix) — per questo si usa un sottodominio dedicato invece
+# di un path-based routing, evitando qualsiasi riscrittura di path.
+
+tuodominio.it {
+	reverse_proxy frontend:80
+}
+
+api.tuodominio.it {
+	reverse_proxy backend:3000
+}
