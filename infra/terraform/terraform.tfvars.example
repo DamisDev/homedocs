@@ -1,0 +1,4 @@
+# Copia in terraform.tfvars (mai committare quello reale) e imposta il tuo IP.
+# Scoprilo con: curl ifconfig.me
+
+ssh_allowed_cidr = "TUO.IP.PUBBLICO.QUI/32"
