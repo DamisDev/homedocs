@@ -8,7 +8,15 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
 
-: "${S3_BACKUP_BUCKET:?Imposta S3_BACKUP_BUCKET (es. export S3_BACKUP_BUCKET=homedocs-backups)}"
+# Legge solo le variabili necessarie da .env (non un source completo: alcuni
+# valori, es. MAIL_FROM="Nome <email>", non sono sintassi bash valida).
+env_var() { grep "^$1=" .env | head -1 | cut -d= -f2-; }
+MINIO_ACCESS_KEY="$(env_var MINIO_ACCESS_KEY)"
+MINIO_SECRET_KEY="$(env_var MINIO_SECRET_KEY)"
+MINIO_BUCKET="$(env_var MINIO_BUCKET)"
+S3_BACKUP_BUCKET="$(env_var S3_BACKUP_BUCKET)"
+
+: "${S3_BACKUP_BUCKET:?Imposta S3_BACKUP_BUCKET in .env (es. S3_BACKUP_BUCKET=homedocs-backups)}"
 
 TIMESTAMP="$(date +%Y-%m-%d_%H%M%S)"
 WORKDIR="$(mktemp -d)"

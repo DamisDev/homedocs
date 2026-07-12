@@ -8,16 +8,21 @@ dell'applicazione. Vedi il piano di deploy per il contesto completo:
   Ubuntu 24.04 + Docker via cloud-init, Elastic IP). Vedi la sezione più sotto
   per i passi di esecuzione.
 
-- `backup.sh` — dump di Mongo + archivio dati MinIO, caricati su un bucket S3.
-  Da schedulare come cron giornaliero sull'istanza EC2 (es. `crontab -e`:
-  `0 3 * * * /opt/homedocs/infra/backup.sh >> /var/log/homedocs-backup.log 2>&1`).
-  Richiede `aws` CLI configurata sull'istanza (IAM role con permessi di scrittura
-  sul bucket di backup) e le stesse variabili di `.env` per Mongo/MinIO.
+- `backup.sh` — dump di Mongo + archivio dati MinIO, caricati sul bucket S3
+  `homedocs-backups-<account-id>` (creato da `terraform/backup.tf`, retention
+  30 giorni). Legge `MINIO_ACCESS_KEY`/`MINIO_SECRET_KEY`/`MINIO_BUCKET`/
+  `S3_BACKUP_BUCKET` direttamente da `.env` (non serve esportarle a mano).
+  Scritture su S3 autorizzate via instance profile IAM associato all'EC2,
+  nessuna credenziale statica sul server. Schedulato via crontab root:
+  `30 7 * * * cd /home/ubuntu/homedocs && /home/ubuntu/homedocs/infra/backup.sh >> /var/log/homedocs-backup.log 2>&1`
+  — le 7:30 sono scelte apposta subito dopo l'accensione automatica delle 7:00
+  (vedi sotto), altrimenti un orario nella finestra 00:00-07:00 troverebbe
+  il server spento e il backup non partirebbe mai.
 
 - `ec2-scheduler/` — Lambda per lo spegnimento/accensione automatico
-  dell'istanza EC2 (00:00-07:00 Europe/Rome), invocata da due regole
-  EventBridge Scheduler. Da deployare separatamente (non gira sull'istanza
-  stessa, è infrastruttura AWS a parte).
+  dell'istanza EC2 (00:00-07:00 Europe/Rome), deployata da
+  `terraform/scheduler.tf` con due regole EventBridge Scheduler. Testata
+  manualmente con `aws lambda invoke` per entrambe le azioni (stop/start).
 
 ## Provisioning EC2 con Terraform
 

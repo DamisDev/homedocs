@@ -101,6 +101,7 @@ resource "aws_instance" "this" {
   subnet_id              = data.aws_subnets.default.ids[0]
   vpc_security_group_ids = [aws_security_group.this.id]
   key_name               = aws_key_pair.this.key_name
+  iam_instance_profile   = aws_iam_instance_profile.ec2_backup.name
   user_data              = file("${path.module}/user_data.sh")
 
   root_block_device {
