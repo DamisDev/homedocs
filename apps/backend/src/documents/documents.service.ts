@@ -161,13 +161,14 @@ export class DocumentsService {
           categorie.find((c) => c.nome === categoria)?.templateCampi ?? [],
       });
 
+      const datiEstratti = result.datiEstratti ?? {};
+      if (result.importo != null) {
+        datiEstratti.importo = String(result.importo);
+      }
       const update: Record<string, unknown> = {
         statoOcr: 'completato',
-        datiEstratti: result.datiEstratti ?? {},
+        datiEstratti,
       };
-      if (result.importo != null) {
-        update['datiEstratti.importo'] = String(result.importo);
-      }
       const doc = await this.docModel.findById(docId).exec();
       if (!doc) return; // eliminato durante l'estrazione
       if (!doc.dataScadenza && result.dataScadenza) {
