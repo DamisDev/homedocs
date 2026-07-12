@@ -7,6 +7,8 @@ privato, a scelta.
 
 **Produzione**: [homedocs.dev](https://homedocs.dev)
 
+**Guida per chi la usa** (non tecnica): [`docs/GUIDA-UTENTE.md`](docs/GUIDA-UTENTE.md).
+
 ## Cosa fa
 
 - **Documenti privati o condivisi**: ogni documento nasce visibile solo a chi
