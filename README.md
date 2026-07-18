@@ -51,7 +51,8 @@ homedocs/
 ├── infra/
 │   ├── terraform/          # Provisioning AWS (EC2, S3 backup, Lambda scheduler)
 │   ├── ec2-scheduler/      # Lambda per lo spegnimento/accensione notturno
-│   └── backup.sh           # Backup giornaliero Mongo+MinIO su S3
+│   ├── backup.sh           # Backup giornaliero Mongo+MinIO su S3
+│   └── restore.sh          # Ripristino dall'ultimo backup S3 (dopo ricreazione istanza)
 ├── docs/
 │   ├── HomeDocs-Project-Spec.md   # Spec di progetto completa
 │   └── design/                     # Mockup e riferimenti visivi
@@ -116,22 +117,29 @@ mano in console). Vista d'insieme:
 ![Architettura AWS](docs/architettura-aws.svg)
 
 - **Route53**: registra il dominio `homedocs.dev` e ne gestisce i record DNS
-  (`homedocs.dev` e `api.homedocs.dev` → Elastic IP dell'istanza).
-- **EC2 (`t3.micro`)**: unica istanza che ospita l'intero stack applicativo
-  via Docker Compose — Caddy, frontend, backend, ocr-service, MongoDB, MinIO.
-  Scelta deliberata: per un carico da 2-4 persone, un'istanza singola con
-  Compose è più semplice ed economica di ECS/Fargate + servizi gestiti, pur
-  restando interamente riproducibile da codice.
+  (`homedocs.dev`, `api.homedocs.dev` e `storage.homedocs.dev` → Elastic IP
+  dell'istanza).
+- **EC2 (`t4g.micro`, Graviton/arm64)**: unica istanza che ospita l'intero
+  stack applicativo via Docker Compose — Caddy, frontend, backend,
+  ocr-service, MongoDB, MinIO. Scelta deliberata: per un carico da 2-4
+  persone, un'istanza singola con Compose è più semplice ed economica di
+  ECS/Fargate + servizi gestiti, pur restando interamente riproducibile da
+  codice. Su ARM le immagini costano ~25% in meno a parità di risorse; il
+  `user_data.sh` predispone 2 GB di swap (la RAM da 1 GB non basta per il
+  build in loco delle immagini) e installa Docker + AWS CLI.
 - **Caddy** (dentro l'istanza): unico servizio con porte pubbliche (80/443),
   termina TLS con certificati Let's Encrypt automatici e instrada il
-  traffico ai container interni — nessun altro servizio (Mongo, MinIO,
-  backend, ocr-service) ha porte esposte all'esterno.
+  traffico ai container interni. Espone tre host: il frontend, l'API backend
+  e `storage.homedocs.dev` → MinIO (necessario perché il browser apre gli URL
+  firmati dei file). Nessun altro servizio ha porte esposte all'esterno.
 - **EventBridge Scheduler + Lambda**: due schedule (00:00 e 07:00
   Europe/Rome) invocano una Lambda che ferma/avvia l'istanza EC2, per
   ridurre le ore fatturate senza rinunciare a un'architettura sempre-Docker.
 - **S3**: bucket dedicato ai backup giornalieri (`mongodump` + dati MinIO),
   con retention di 30 giorni, scritto dall'istanza tramite un instance
-  profile IAM (nessuna credenziale statica).
+  profile IAM (nessuna credenziale statica). Un cron (`infra/backup.sh`) gira
+  alle 08:00; dopo una ricreazione dell'istanza il DB riparte vuoto e si
+  ripristina con `infra/restore.sh`.
 - **IAM**: ruoli con permessi minimi e mirati — la Lambda può solo
   start/stop quella specifica istanza, l'instance profile EC2 può solo
   scrivere sul bucket di backup.

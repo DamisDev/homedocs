@@ -3,9 +3,11 @@ node_modules/
 __pycache__/
 *.pyc
 
-# Ambiente
+# Ambiente — mai committare file con segreti reali (repo pubblico).
+# Tracciato solo .env.example come template.
 .env
-.env.local
+.env.*
+!.env.example
 
 # Build
 dist/
