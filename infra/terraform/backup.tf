@@ -46,16 +46,25 @@ resource "aws_iam_role" "ec2_backup" {
 }
 
 resource "aws_iam_role_policy" "ec2_backup" {
-  name = "${var.project_name}-write-backups"
+  name = "${var.project_name}-rw-backups"
   role = aws_iam_role.ec2_backup.id
 
   policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [{
-      Effect   = "Allow"
-      Action   = ["s3:PutObject"]
-      Resource = "${aws_s3_bucket.backups.arn}/*"
-    }]
+    Statement = [
+      {
+        # scrittura (backup.sh) e lettura oggetti (restore.sh)
+        Effect   = "Allow"
+        Action   = ["s3:PutObject", "s3:GetObject"]
+        Resource = "${aws_s3_bucket.backups.arn}/*"
+      },
+      {
+        # elenco oggetti: restore.sh cerca l'ultimo backup nel bucket
+        Effect   = "Allow"
+        Action   = ["s3:ListBucket"]
+        Resource = aws_s3_bucket.backups.arn
+      },
+    ]
   })
 }
 
