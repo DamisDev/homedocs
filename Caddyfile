@@ -13,3 +13,11 @@ homedocs.dev {
 api.homedocs.dev {
 	reverse_proxy backend:3000
 }
+
+# Espone solo l'API S3 di MinIO (porta 9000), per gli URL firmati che il
+# browser apre per scaricare/visualizzare i file. La console (9001) resta
+# interna. Caddy preserva l'Host, necessario per la validazione della firma
+# SigV4 lato MinIO.
+storage.homedocs.dev {
+	reverse_proxy minio:9000
+}

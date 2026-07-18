@@ -17,8 +17,6 @@ export class StorageService implements OnModuleInit {
 
   constructor(private readonly configService: ConfigService) {
     const common = {
-      port: Number(this.configService.get<string>('MINIO_PORT') ?? 9000),
-      useSSL: this.configService.get('MINIO_USE_SSL') === 'true',
       accessKey: this.configService.getOrThrow<string>('MINIO_ACCESS_KEY'),
       secretKey: this.configService.getOrThrow<string>('MINIO_SECRET_KEY'),
       // region fissa: evita al client di firma la scoperta via rete
@@ -26,11 +24,25 @@ export class StorageService implements OnModuleInit {
       region: 'us-east-1',
     };
     const endPoint = this.configService.getOrThrow<string>('MINIO_ENDPOINT');
-    this.client = new Minio.Client({ ...common, endPoint });
+    const port = Number(this.configService.get<string>('MINIO_PORT') ?? 9000);
+    const useSSL = this.configService.get('MINIO_USE_SSL') === 'true';
+    this.client = new Minio.Client({ ...common, endPoint, port, useSSL });
+    // Client di firma: host/porta/SSL possono differire da quelli interni,
+    // perché in produzione MinIO è raggiunto dal browser via reverse proxy
+    // (es. storage.dominio:443 HTTPS) mentre i container lo vedono su
+    // minio:9000 HTTP. In dev, senza le MINIO_PUBLIC_*, ricade sui valori interni.
     this.presignClient = new Minio.Client({
       ...common,
       endPoint:
         this.configService.get<string>('MINIO_PUBLIC_ENDPOINT') ?? endPoint,
+      port: Number(
+        this.configService.get<string>('MINIO_PUBLIC_PORT') ??
+          this.configService.get<string>('MINIO_PORT') ??
+          9000,
+      ),
+      useSSL:
+        (this.configService.get<string>('MINIO_PUBLIC_USE_SSL') ??
+          this.configService.get<string>('MINIO_USE_SSL')) === 'true',
     });
     this.bucket = this.configService.getOrThrow<string>('MINIO_BUCKET');
   }
