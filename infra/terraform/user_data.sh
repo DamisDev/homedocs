@@ -30,6 +30,16 @@ apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin do
 
 usermod -aG docker ubuntu
 
+# --- Backup giornaliero: cron di sistema alle 08:00 che lancia infra/backup.sh
+# come utente ubuntu. PATH esplicito perche' aws v2 sta in /usr/local/bin (fuori
+# dal PATH minimale di cron). Gira dopo che il repo e' clonato e .env presente;
+# finche' non lo sono, backup.sh fallisce in modo innocuo e logga in backup.log. ---
+cat > /etc/cron.d/homedocs-backup <<'CRON'
+PATH=/usr/local/bin:/usr/bin:/bin
+0 8 * * * ubuntu /home/ubuntu/homedocs/infra/backup.sh >> /home/ubuntu/backup.log 2>&1
+CRON
+chmod 0644 /etc/cron.d/homedocs-backup
+
 # --- AWS CLI v2: serve a backup.sh/restore.sh per leggere/scrivere sul bucket
 # S3 dei backup (l'accesso e' via IAM instance profile, nessuna credenziale). ---
 if ! command -v aws >/dev/null 2>&1; then
