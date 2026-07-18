@@ -43,8 +43,14 @@ Ogni documento nasce `privato` (visibile solo a chi lo carica). Diventa `condivi
 
 ## Convenzioni di lavoro
 
-- **Branch naming**: `feature/HD-XXX-slug` (coerente con workflow Jira, se attivato)
+- **Modello branch**:
+  - `main` = ciò che gira in produzione, sempre stabile. **Protetto**: niente push diretto, si aggiorna **solo via pull request** con la CI (`backend` + `frontend`) verde. Non committare né pushare mai direttamente su `main`.
+  - `develop` = branch di integrazione dove si accumulano le feature.
+  - `feature/HD-XXX-slug` = un branch per lavoro, parte da `develop`.
+  - Flusso: `feature/*` → merge in `develop` → PR `develop` → `main` (CI verde) → sul server `git pull` deploya. Il deploy non è automatico.
+  - Nota squash merge: dopo un merge di un PR in `main`, riallineare `develop` con `git switch develop && git merge main && git push`.
 - **Commit**: Conventional Commits (`feat:`, `fix:`, `chore:`, ecc.)
+- **Ambienti isolati**: dev gira in locale (Docker, dati usa e getta, porte su localhost); prod su EC2 (Mongo/MinIO chiusi verso l'esterno, solo via SSH). DB e storage non sono condivisi. I file `.env`/`.env.prod` (segreti) non sono versionati.
 - **Ordine di sviluppo consigliato**: Fase 0 (setup) → Fase 1 (MVP: CRUD documenti, dashboard, privacy) → Fase 2 (OCR/AI) → Fase 3 (promemoria) → Fase 4 (rifinitura)
 - **Mockup**: prima di implementare una schermata frontend, controlla se esiste un riferimento in `docs/design/` e seguilo per palette, spacing, componenti
 
