@@ -93,6 +93,41 @@ cd apps/frontend && npm test   # Vitest, 12 test
 
 Entrambi girano in CI ad ogni push.
 
+## Branch e deploy
+
+Due ambienti completamente isolati: **dev** gira in locale (Docker, dati usa e
+getta), **prod** gira su EC2 (DB e MinIO chiusi verso l'esterno, raggiungibili
+solo via SSH). Non condividono né database né storage.
+
+Modello dei branch:
+
+- **`main`** — sempre stabile, è ciò che gira in produzione. **Protetto**: no
+  push diretto, merge solo via pull request con CI (`backend` + `frontend`)
+  verde.
+- **`develop`** — branch di integrazione dove si accumulano le feature.
+- **`feature/HD-xxx-nome`** — un branch per lavoro, parte da `develop`.
+
+Flusso tipico:
+
+```bash
+git switch develop && git pull
+git switch -c feature/HD-xxx-nome        # sviluppi in locale con `docker compose up -d`
+# ...commit sul feature branch...
+git switch develop && git merge feature/HD-xxx-nome && git push
+
+# rilascio: PR develop -> main (la CI deve passare)
+gh pr create --base main --head develop --fill
+gh pr merge --squash
+
+# deploy: sul server
+ssh -i infra/terraform/homedocs-key.pem ubuntu@<elastic-ip>
+cd ~/homedocs && git pull && docker compose -f docker-compose.prod.yml up -d --build
+```
+
+Il deploy avviene **solo** quando si esegue `git pull` sul server: nessun
+rilascio automatico. I file `.env`/`.env.prod` (segreti) non sono versionati —
+vivono solo in locale e sul server.
+
 ## Produzione
 
 Lo stack di produzione (`docker-compose.prod.yml`) aggiunge Caddy come
