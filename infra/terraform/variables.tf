@@ -5,9 +5,9 @@ variable "aws_region" {
 }
 
 variable "instance_type" {
-  description = "Tipo di istanza EC2 (t3.micro copre le 750h/mese del free tier per un account nuovo)"
+  description = "Tipo di istanza EC2. t4g.micro (Graviton/ARM) ha stesse risorse del t3.micro ma ~25% piu economico; richiede AMI arm64 (vedi data.aws_ami.ubuntu) e immagini Docker arm64-compatibili (le basi node/python/nginx usate lo sono)."
   type        = string
-  default     = "t3.micro"
+  default     = "t4g.micro"
 }
 
 variable "ssh_allowed_cidr" {

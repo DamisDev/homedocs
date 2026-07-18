@@ -6,10 +6,10 @@
 # nessun setGlobalPrefix) — per questo si usa un sottodominio dedicato invece
 # di un path-based routing, evitando qualsiasi riscrittura di path.
 
-tuodominio.it {
+homedocs.dev {
 	reverse_proxy frontend:80
 }
 
-api.tuodominio.it {
+api.homedocs.dev {
 	reverse_proxy backend:3000
 }
