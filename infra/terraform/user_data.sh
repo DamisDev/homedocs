@@ -3,6 +3,16 @@
 # (corrisponde al passo 2 del piano di deploy, "Installare Docker").
 set -euo pipefail
 
+# --- Swap: la t4g.micro ha solo ~1 GB di RAM, insufficiente per il build in
+# loco delle immagini (Vite/nest). 2 GB di swap evitano l'OOM killer. ---
+if [ ! -f /swapfile ]; then
+  fallocate -l 2G /swapfile
+  chmod 600 /swapfile
+  mkswap /swapfile
+  swapon /swapfile
+  echo '/swapfile none swap sw 0 0' >> /etc/fstab
+fi
+
 apt-get update -y
 apt-get install -y ca-certificates curl gnupg
 
